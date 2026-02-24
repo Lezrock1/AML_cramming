@@ -6,7 +6,7 @@ from huggingface_hub import snapshot_download
 from transformers import BertConfig, BertForMaskedLM, AutoTokenizer
 
 class _Tee:
-    """Duplicates writes to multiple streams (console + log file)."""
+    """Write to console and log file."""
     def __init__(self, *streams):
         self.streams = streams
     def write(self, obj):
@@ -44,14 +44,10 @@ def onecycle_scheduler_cramming(optimizer, total_steps, peak_lr=1e-3, pct_up=0.5
     return torch.optim.lr_scheduler.LambdaLR(optimizer, lr_lambda=lr_factor)
 
 def mlm_collate_tokenized(examples, tokenizer, seq_length=128, mlm_prob=0.25):
-    """
-    examples: list of dicts from streaming dataset
-      each example should contain "input_ids": list[int] (len=seq_length)
-    """
-    # 1) input_ids stapeln
+    """Collate tokenized examples for MLM."""
     input_ids = torch.tensor([ex["input_ids"] for ex in examples], dtype=torch.long)
 
-    # Safety: auf feste Länge bringen (falls mal minimal abweichend)
+    # Normalize to fixed length.
     if input_ids.size(1) != seq_length:
         input_ids = input_ids[:, :seq_length]
         if input_ids.size(1) < seq_length:
@@ -62,10 +58,9 @@ def mlm_collate_tokenized(examples, tokenizer, seq_length=128, mlm_prob=0.25):
     pad_id = tokenizer.pad_token_id if tokenizer.pad_token_id is not None else 0
     attention_mask = (input_ids != pad_id).long()
 
-    # 2) Labels initial = original tokens
     labels = input_ids.clone()
 
-    # 3) Welche Positionen darf man masken? (nicht pad, nicht special)
+    # Maskable positions (exclude pad and special tokens).
     special_ids = set(tokenizer.all_special_ids)
     special_mask = torch.zeros_like(input_ids, dtype=torch.bool)
     for sid in special_ids:
@@ -73,11 +68,10 @@ def mlm_collate_tokenized(examples, tokenizer, seq_length=128, mlm_prob=0.25):
 
     can_mask = attention_mask.bool() & (~special_mask)
 
-    # 4) Maske ziehen
     mask = (torch.rand_like(input_ids.float()) < mlm_prob) & can_mask
     labels[~mask] = -100
 
-    # 5) 80/10/10 Regel
+    # 80/10/10 rule.
     rand = torch.rand_like(input_ids.float())
     mask_token_id = tokenizer.mask_token_id
     if mask_token_id is None:
@@ -135,7 +129,7 @@ def train(
     os.makedirs(checkpoint_dir, exist_ok=True)
     ckpt_path = os.path.join(run_dir, "intermediate_state.pth")
 
-    # ---- redirect stdout to console + log file (same layout as pretrain.py) ----
+    # redirect stdout to console + log file (same layout as pretrain.py for better comparability)
     now = datetime.datetime.now()
     pretrain_log_dir = os.path.join(run_dir, "pretrain", now.strftime("%Y-%m-%d"), now.strftime("%H-%M-%S"))
     os.makedirs(pretrain_log_dir, exist_ok=True)
@@ -281,13 +275,13 @@ def train(
         with open(os.path.join(full_path, "model_config.json"), "w") as f:
             json.dump(cfg.to_dict(), f, indent=2)
     
-    # Cleanup to avoid PyGIL errors at exit
+    # Cleanup
     del model, optim, scheduler, scaler, batch, dl, it, loss_buf
     if device == "cuda":
         torch.cuda.empty_cache()
     print("Job complete and cleaned up.")
 
-    # ---- restore stdout & close log file ----
+    # restore stdout & close log file
     sys.stdout = sys.__stdout__
     _log_file.close()
 

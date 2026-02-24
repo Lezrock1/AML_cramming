@@ -26,7 +26,6 @@ def wikitext2_perplexity(model_name_or_path, device="cuda", split="test", max_le
     if tok.pad_token is None:
         tok.pad_token = tok.eos_token
 
-    # optional: Warnung loswerden (Tokenizer meckert sonst bei langen Sequenzen)
     tok.model_max_length = 10**9
 
     config = LlamaConfig.from_pretrained(model_name_or_path)
@@ -80,13 +79,13 @@ def wikitext2_perplexity(model_name_or_path, device="cuda", split="test", max_le
         input_chunk = input_ids[:, start:end]
         labels = input_chunk.clone()
 
-        # IMMER: erstes Token nicht bewerten (sonst "kein Kontext" im Fenster)
+        # Always skip the first token (no left context in window)
         labels[:, 0] = -100
 
-        # Wenn du Overlap nutzt (stride < max_length): nur die "neuen" Tokens bewerten
+        # When using overlap (stride < max_length): only evaluate the “new” tokens
         if stride < max_length and start > 0:
             overlap = max_length - stride
-            # maskiere die überlappenden Kontext-Tokens (ab Token 1 bis overlap)
+            # Mask overlapping context tokens (from token 1 to overlap)
             labels[:, 1:overlap+1] = -100
 
         out = model(input_ids=input_chunk, labels=labels)

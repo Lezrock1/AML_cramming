@@ -4,7 +4,7 @@ from transformers import AutoTokenizer
 
 hf_dataset_id = "JonasGeiping/the_pile_WordPiecex32768_2efdb9d060d1ae95faf952ec1a50f020"
 
-# lädt nur den tokenizer/-Ordner aus dem Dataset-Repo in den HF-Cache
+# Load only the tokenizer folder into the HF cache
 local_ds_dir = snapshot_download(
     repo_id=hf_dataset_id,
     repo_type="dataset",
