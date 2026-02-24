@@ -1,0 +1,19 @@
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+wandb: WARNING `start_method` is deprecated and will be removed in a future version of wandb. This setting is currently non-functional and safely ignored.
+Error executing job with overrides: ['name=test2h', 'arch=crammed-bert', 'train=bert-o4', 'data=pile-readymade', 'budget=2', 'impl.threads=16', 'impl.microbatch_size=8', 'impl.compile_torch=False', 'impl.fullgraph=false', 'wandb.enabled=True', 'wandb.project=cramming']
+Traceback (most recent call last):
+  File "/home/group.kurse/jnoow006/cramming/pretrain.py", line 196, in launch
+    cramming.utils.main_launcher(cfg, main_training_process, job_name="pretraining")
+  File "/home/group.kurse/jnoow006/cramming/cramming/utils.py", line 50, in main_launcher
+    _initialize_wandb(setup, cfg)
+  File "/home/group.kurse/jnoow006/cramming/cramming/utils.py", line 451, in _initialize_wandb
+    settings.update({"git_root": cfg.original_cwd})
+    ^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/pydantic/main.py", line 1026, in __getattr__
+    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
+AttributeError: 'Settings' object has no attribute 'update'
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.

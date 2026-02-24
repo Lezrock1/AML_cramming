@@ -1,0 +1,61 @@
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 78643.20it/s]
+Traceback (most recent call last):
+  File "/home/group.kurse/jnoow006/cramming/pretrain_LLaMA_base.py", line 275, in <module>
+    train()
+  File "/home/group.kurse/jnoow006/cramming/pretrain_LLaMA_base.py", line 192, in train
+    out = model(**batch)
+          ^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 1176, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 1019, in forward
+    layer_outputs = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 755, in forward
+    hidden_states = self.mlp(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 241, in forward
+    down_proj = self.down_proj(self.act_fn(self.gate_proj(x)) * self.up_proj(x))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 393, in forward
+    return F.silu(input, inplace=self.inplace)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/functional.py", line 2075, in silu
+    return torch._C._nn.silu(input)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.50 GiB. GPU 0 has a total capacity of 93.09 GiB of which 849.44 MiB is free. Including non-PyTorch memory, this process has 92.25 GiB memory in use. Of the allocated memory 91.21 GiB is allocated by PyTorch, and 186.93 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+/var/spool/slurmd/job4059756/slurm_script: line 22: 2629453 Aborted                 (core dumped) python pretrain_LLaMA_base.py

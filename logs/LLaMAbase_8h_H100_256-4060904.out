@@ -1,0 +1,138 @@
+Mon Feb  9 01:31:06 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.95.05              Driver Version: 580.95.05      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:A6:00.0 Off |                    0 |
+| N/A   46C    P0             72W /  700W |       0MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+torch 2.2.1 | cuda True
+
+===== Training log started at 2026-02-09 01:31:10 =====
+Log file: outputs/LLaMAbase_8h_H100_256/pretrain/2026-02-09/01-31-10/LLaMAbase_8h_H100_256_pretrain.log
+Train config: {'hf_dataset_id': 'JonasGeiping/the_pile_WordPiecex32768_2efdb9d060d1ae95faf952ec1a50f020', 'base_dir': 'outputs', 'run_name': 'LLaMAbase_8h_H100_256', 'micro_batch_size': 128, 'print_every': 1000, 'budget_hours': 8, 'max_len': 256, 'use_amp': True, 'gradient_clipping': 1.0, 'batch_size': 8192, 'peak_lr': 0.0003, 'warmup_steps': 2000}
+loaded vocab_size: 32768
+Total parameters:  201351936
+dict_keys(['input_ids'])
+<class 'list'> 128 [47, 47, 47, 47, 47, 47, 47, 47, 47, 47]
+Measured 17.27s/optim_step (avg of steps 4-6) -> ~1667 optimizer steps for 8h budget
+2026-02-09 01:35:47 | elapsed 0.08std | step 1000 | loss 10.5345 | avg 0.1648 | lr 0.000000 | 0.271s/step | ~121000 tok/s
+2026-02-09 01:40:18 | elapsed 0.15std | step 2000 | loss 10.5421 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120838 tok/s
+2026-02-09 01:44:49 | elapsed 0.23std | step 3000 | loss 10.5478 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120808 tok/s
+2026-02-09 01:49:20 | elapsed 0.30std | step 4000 | loss 10.5753 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120891 tok/s
+2026-02-09 01:53:51 | elapsed 0.38std | step 5000 | loss 10.5560 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120826 tok/s
+2026-02-09 01:58:22 | elapsed 0.45std | step 6000 | loss 10.5586 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120841 tok/s
+2026-02-09 02:02:54 | elapsed 0.53std | step 7000 | loss 10.5520 | avg 0.1649 | lr 0.000000 | 0.271s/step | ~120846 tok/s
+2026-02-09 02:07:26 | elapsed 0.60std | step 8000 | loss 10.5541 | avg 0.1648 | lr 0.000000 | 0.272s/step | ~120333 tok/s
+2026-02-09 02:11:57 | elapsed 0.68std | step 9000 | loss 10.5379 | avg 0.1648 | lr 0.000000 | 0.271s/step | ~120730 tok/s
+2026-02-09 02:16:29 | elapsed 0.75std | step 10000 | loss 10.5584 | avg 0.1647 | lr 0.000000 | 0.271s/step | ~120782 tok/s
+2026-02-09 02:21:00 | elapsed 0.83std | step 11000 | loss 10.5403 | avg 0.1647 | lr 0.000000 | 0.271s/step | ~120759 tok/s
+2026-02-09 02:25:31 | elapsed 0.90std | step 12000 | loss 10.5333 | avg 0.1647 | lr 0.000000 | 0.271s/step | ~120733 tok/s
+2026-02-09 02:30:03 | elapsed 0.98std | step 13000 | loss 10.5320 | avg 0.1646 | lr 0.000000 | 0.271s/step | ~120777 tok/s
+2026-02-09 02:34:34 | elapsed 1.06std | step 14000 | loss 10.5290 | avg 0.1646 | lr 0.000000 | 0.271s/step | ~120731 tok/s
+2026-02-09 02:39:05 | elapsed 1.13std | step 15000 | loss 10.5115 | avg 0.1645 | lr 0.000000 | 0.271s/step | ~120756 tok/s
+2026-02-09 02:43:38 | elapsed 1.21std | step 16000 | loss 10.5164 | avg 0.1644 | lr 0.000000 | 0.272s/step | ~120282 tok/s
+2026-02-09 02:48:09 | elapsed 1.28std | step 17000 | loss 10.5058 | avg 0.1644 | lr 0.000000 | 0.271s/step | ~120806 tok/s
+2026-02-09 02:52:40 | elapsed 1.36std | step 18000 | loss 10.5177 | avg 0.1643 | lr 0.000000 | 0.271s/step | ~120770 tok/s
+2026-02-09 02:57:12 | elapsed 1.43std | step 19000 | loss 10.5035 | avg 0.1643 | lr 0.000000 | 0.271s/step | ~120754 tok/s
+2026-02-09 03:01:43 | elapsed 1.51std | step 20000 | loss 10.5073 | avg 0.1642 | lr 0.000000 | 0.271s/step | ~120738 tok/s
+2026-02-09 03:06:15 | elapsed 1.58std | step 21000 | loss 10.5051 | avg 0.1641 | lr 0.000000 | 0.271s/step | ~120707 tok/s
+2026-02-09 03:10:46 | elapsed 1.66std | step 22000 | loss 10.4877 | avg 0.1640 | lr 0.000000 | 0.271s/step | ~120742 tok/s
+2026-02-09 03:15:18 | elapsed 1.73std | step 23000 | loss 10.4969 | avg 0.1639 | lr 0.000000 | 0.272s/step | ~120281 tok/s
+2026-02-09 03:19:50 | elapsed 1.81std | step 24000 | loss 10.4781 | avg 0.1639 | lr 0.000000 | 0.271s/step | ~120759 tok/s
+2026-02-09 03:24:21 | elapsed 1.88std | step 25000 | loss 10.4752 | avg 0.1638 | lr 0.000000 | 0.271s/step | ~120728 tok/s
+2026-02-09 03:28:53 | elapsed 1.96std | step 26000 | loss 10.4921 | avg 0.1637 | lr 0.000000 | 0.271s/step | ~120746 tok/s
+2026-02-09 03:33:24 | elapsed 2.04std | step 27000 | loss 10.4657 | avg 0.1636 | lr 0.000000 | 0.271s/step | ~120746 tok/s
+2026-02-09 03:37:55 | elapsed 2.11std | step 28000 | loss 10.4631 | avg 0.1635 | lr 0.000000 | 0.271s/step | ~120788 tok/s
+2026-02-09 03:42:27 | elapsed 2.19std | step 29000 | loss 10.4564 | avg 0.1634 | lr 0.000000 | 0.271s/step | ~120817 tok/s
+2026-02-09 03:46:58 | elapsed 2.26std | step 30000 | loss 10.4394 | avg 0.1633 | lr 0.000000 | 0.272s/step | ~120685 tok/s
+2026-02-09 03:51:30 | elapsed 2.34std | step 31000 | loss 10.4342 | avg 0.1631 | lr 0.000000 | 0.272s/step | ~120331 tok/s
+2026-02-09 03:56:02 | elapsed 2.41std | step 32000 | loss 10.4344 | avg 0.1630 | lr 0.000000 | 0.271s/step | ~120738 tok/s
+2026-02-09 04:00:33 | elapsed 2.49std | step 33000 | loss 10.4456 | avg 0.1631 | lr 0.000000 | 0.271s/step | ~120810 tok/s
+2026-02-09 04:05:04 | elapsed 2.56std | step 34000 | loss 10.4120 | avg 0.1629 | lr 0.000000 | 0.271s/step | ~120768 tok/s
+2026-02-09 04:09:36 | elapsed 2.64std | step 35000 | loss 10.4029 | avg 0.1628 | lr 0.000000 | 0.271s/step | ~120805 tok/s
+2026-02-09 04:14:07 | elapsed 2.71std | step 36000 | loss 10.3968 | avg 0.1626 | lr 0.000000 | 0.271s/step | ~120786 tok/s
+2026-02-09 04:18:38 | elapsed 2.79std | step 37000 | loss 10.3970 | avg 0.1625 | lr 0.000000 | 0.271s/step | ~120807 tok/s
+2026-02-09 04:23:10 | elapsed 2.87std | step 38000 | loss 10.3902 | avg 0.1624 | lr 0.000000 | 0.272s/step | ~120357 tok/s
+2026-02-09 04:27:42 | elapsed 2.94std | step 39000 | loss 10.3612 | avg 0.1622 | lr 0.000000 | 0.271s/step | ~120760 tok/s
+2026-02-09 04:32:13 | elapsed 3.02std | step 40000 | loss 10.3810 | avg 0.1620 | lr 0.000000 | 0.271s/step | ~120784 tok/s
+2026-02-09 04:36:44 | elapsed 3.09std | step 41000 | loss 10.3418 | avg 0.1619 | lr 0.000000 | 0.271s/step | ~120750 tok/s
+2026-02-09 04:41:16 | elapsed 3.17std | step 42000 | loss 10.3315 | avg 0.1617 | lr 0.000000 | 0.271s/step | ~120778 tok/s
+2026-02-09 04:45:47 | elapsed 3.24std | step 43000 | loss 10.3342 | avg 0.1615 | lr 0.000000 | 0.271s/step | ~120758 tok/s
+2026-02-09 04:50:18 | elapsed 3.32std | step 44000 | loss 10.2992 | avg 0.1613 | lr 0.000000 | 0.271s/step | ~120771 tok/s
+2026-02-09 04:54:50 | elapsed 3.39std | step 45000 | loss 10.3398 | avg 0.1613 | lr 0.000000 | 0.271s/step | ~120745 tok/s
+2026-02-09 04:59:22 | elapsed 3.47std | step 46000 | loss 10.3193 | avg 0.1613 | lr 0.000000 | 0.272s/step | ~120340 tok/s
+2026-02-09 05:03:53 | elapsed 3.54std | step 47000 | loss 10.3146 | avg 0.1611 | lr 0.000000 | 0.271s/step | ~120748 tok/s
+2026-02-09 05:08:25 | elapsed 3.62std | step 48000 | loss 10.2721 | avg 0.1609 | lr 0.000000 | 0.271s/step | ~120743 tok/s
+2026-02-09 05:12:56 | elapsed 3.69std | step 49000 | loss 10.2719 | avg 0.1607 | lr 0.000000 | 0.271s/step | ~120758 tok/s
+2026-02-09 05:17:28 | elapsed 3.77std | step 50000 | loss 10.2649 | avg 0.1604 | lr 0.000000 | 0.271s/step | ~120703 tok/s
+2026-02-09 05:21:59 | elapsed 3.85std | step 51000 | loss 10.2458 | avg 0.1602 | lr 0.000000 | 0.271s/step | ~120754 tok/s
+2026-02-09 05:26:30 | elapsed 3.92std | step 52000 | loss 10.2130 | avg 0.1600 | lr 0.000000 | 0.271s/step | ~120760 tok/s
+2026-02-09 05:31:03 | elapsed 4.00std | step 53000 | loss 10.1916 | avg 0.1597 | lr 0.000000 | 0.272s/step | ~120304 tok/s
+2026-02-09 05:35:34 | elapsed 4.07std | step 54000 | loss 10.1976 | avg 0.1595 | lr 0.000000 | 0.271s/step | ~120761 tok/s
+2026-02-09 05:40:05 | elapsed 4.15std | step 55000 | loss 10.1866 | avg 0.1592 | lr 0.000000 | 0.271s/step | ~120764 tok/s
+2026-02-09 05:44:37 | elapsed 4.22std | step 56000 | loss 10.1694 | avg 0.1589 | lr 0.000000 | 0.271s/step | ~120773 tok/s
+2026-02-09 05:49:08 | elapsed 4.30std | step 57000 | loss 10.1219 | avg 0.1587 | lr 0.000000 | 0.271s/step | ~120695 tok/s
+2026-02-09 05:53:40 | elapsed 4.37std | step 58000 | loss 10.1317 | avg 0.1584 | lr 0.000000 | 0.271s/step | ~120762 tok/s
+2026-02-09 05:58:11 | elapsed 4.45std | step 59000 | loss 10.1076 | avg 0.1581 | lr 0.000000 | 0.271s/step | ~120749 tok/s
+2026-02-09 06:02:42 | elapsed 4.52std | step 60000 | loss 10.1016 | avg 0.1578 | lr 0.000000 | 0.271s/step | ~120759 tok/s
+2026-02-09 06:07:15 | elapsed 4.60std | step 61000 | loss 10.0932 | avg 0.1576 | lr 0.000000 | 0.272s/step | ~120267 tok/s
+2026-02-09 06:11:46 | elapsed 4.68std | step 62000 | loss 10.0468 | avg 0.1573 | lr 0.000000 | 0.271s/step | ~120729 tok/s
+2026-02-09 06:16:18 | elapsed 4.75std | step 63000 | loss 10.0632 | avg 0.1570 | lr 0.000000 | 0.271s/step | ~120697 tok/s
+2026-02-09 06:20:49 | elapsed 4.83std | step 64000 | loss 10.0116 | avg 0.1568 | lr 0.000000 | 0.271s/step | ~120731 tok/s
+2026-02-09 06:25:20 | elapsed 4.90std | step 65000 | loss 10.0372 | avg 0.1565 | lr 0.000000 | 0.271s/step | ~120720 tok/s
+2026-02-09 06:29:52 | elapsed 4.98std | step 66000 | loss 10.0747 | avg 0.1567 | lr 0.000000 | 0.271s/step | ~120729 tok/s
+2026-02-09 06:34:23 | elapsed 5.05std | step 67000 | loss 10.0178 | avg 0.1566 | lr 0.000000 | 0.271s/step | ~120765 tok/s
+2026-02-09 06:38:56 | elapsed 5.13std | step 68000 | loss 9.9963 | avg 0.1564 | lr 0.000000 | 0.272s/step | ~120305 tok/s
+2026-02-09 06:43:27 | elapsed 5.20std | step 69000 | loss 9.9801 | avg 0.1561 | lr 0.000000 | 0.271s/step | ~120756 tok/s
+2026-02-09 06:47:58 | elapsed 5.28std | step 70000 | loss 9.9543 | avg 0.1559 | lr 0.000000 | 0.271s/step | ~120750 tok/s
+2026-02-09 06:52:30 | elapsed 5.35std | step 71000 | loss 9.9337 | avg 0.1557 | lr 0.000000 | 0.271s/step | ~120747 tok/s
+2026-02-09 06:57:01 | elapsed 5.43std | step 72000 | loss 9.9315 | avg 0.1554 | lr 0.000000 | 0.271s/step | ~120728 tok/s
+2026-02-09 07:01:33 | elapsed 5.50std | step 73000 | loss 9.9580 | avg 0.1552 | lr 0.000000 | 0.271s/step | ~120758 tok/s
+2026-02-09 07:06:04 | elapsed 5.58std | step 74000 | loss 9.9502 | avg 0.1550 | lr 0.000000 | 0.271s/step | ~120799 tok/s
+2026-02-09 07:10:35 | elapsed 5.66std | step 75000 | loss 9.8988 | avg 0.1548 | lr 0.000000 | 0.271s/step | ~120732 tok/s
+2026-02-09 07:15:08 | elapsed 5.73std | step 76000 | loss 9.9039 | avg 0.1547 | lr 0.000000 | 0.272s/step | ~120263 tok/s
+2026-02-09 07:19:39 | elapsed 5.81std | step 77000 | loss 9.8881 | avg 0.1545 | lr 0.000000 | 0.271s/step | ~120744 tok/s
+2026-02-09 07:24:10 | elapsed 5.88std | step 78000 | loss 9.8363 | avg 0.1543 | lr 0.000000 | 0.271s/step | ~120791 tok/s
+2026-02-09 07:28:42 | elapsed 5.96std | step 79000 | loss 9.8670 | avg 0.1541 | lr 0.000000 | 0.271s/step | ~120704 tok/s
+2026-02-09 07:33:13 | elapsed 6.03std | step 80000 | loss 9.8648 | avg 0.1540 | lr 0.000000 | 0.271s/step | ~120794 tok/s
+2026-02-09 07:37:44 | elapsed 6.11std | step 81000 | loss 9.8097 | avg 0.1538 | lr 0.000000 | 0.271s/step | ~120747 tok/s
+2026-02-09 07:42:16 | elapsed 6.18std | step 82000 | loss 9.8389 | avg 0.1537 | lr 0.000000 | 0.271s/step | ~120754 tok/s
+2026-02-09 07:46:47 | elapsed 6.26std | step 83000 | loss 9.8154 | avg 0.1535 | lr 0.000000 | 0.271s/step | ~120779 tok/s
+2026-02-09 07:51:20 | elapsed 6.33std | step 84000 | loss 9.8219 | avg 0.1534 | lr 0.000000 | 0.273s/step | ~120161 tok/s
+2026-02-09 07:55:51 | elapsed 6.41std | step 85000 | loss 9.8021 | avg 0.1533 | lr 0.000000 | 0.271s/step | ~120750 tok/s
+2026-02-09 08:00:23 | elapsed 6.49std | step 86000 | loss 9.8013 | avg 0.1532 | lr 0.000000 | 0.271s/step | ~120762 tok/s
+2026-02-09 08:04:54 | elapsed 6.56std | step 87000 | loss 9.7570 | avg 0.1531 | lr 0.000000 | 0.271s/step | ~120768 tok/s
+2026-02-09 08:09:25 | elapsed 6.64std | step 88000 | loss 9.7710 | avg 0.1529 | lr 0.000000 | 0.271s/step | ~120708 tok/s
+2026-02-09 08:13:57 | elapsed 6.71std | step 89000 | loss 9.7874 | avg 0.1529 | lr 0.000000 | 0.271s/step | ~120695 tok/s
+2026-02-09 08:18:28 | elapsed 6.79std | step 90000 | loss 9.7893 | avg 0.1528 | lr 0.000000 | 0.272s/step | ~120656 tok/s
+2026-02-09 08:23:01 | elapsed 6.86std | step 91000 | loss 9.7279 | avg 0.1527 | lr 0.000000 | 0.272s/step | ~120261 tok/s
+2026-02-09 08:27:32 | elapsed 6.94std | step 92000 | loss 9.7767 | avg 0.1526 | lr 0.000000 | 0.272s/step | ~120662 tok/s
+2026-02-09 08:32:04 | elapsed 7.01std | step 93000 | loss 9.7912 | avg 0.1526 | lr 0.000000 | 0.272s/step | ~120606 tok/s
+2026-02-09 08:36:36 | elapsed 7.09std | step 94000 | loss 9.7182 | avg 0.1525 | lr 0.000000 | 0.272s/step | ~120648 tok/s
+2026-02-09 08:41:07 | elapsed 7.16std | step 95000 | loss 9.7660 | avg 0.1524 | lr 0.000000 | 0.272s/step | ~120631 tok/s
+2026-02-09 08:45:39 | elapsed 7.24std | step 96000 | loss 9.7895 | avg 0.1524 | lr 0.000000 | 0.272s/step | ~120676 tok/s
+2026-02-09 08:50:10 | elapsed 7.32std | step 97000 | loss 9.7369 | avg 0.1524 | lr 0.000000 | 0.271s/step | ~120696 tok/s
+2026-02-09 08:54:42 | elapsed 7.39std | step 98000 | loss 9.7830 | avg 0.1523 | lr 0.000000 | 0.271s/step | ~120757 tok/s
+2026-02-09 08:59:14 | elapsed 7.47std | step 99000 | loss 9.7618 | avg 0.1523 | lr 0.000000 | 0.273s/step | ~120240 tok/s
+2026-02-09 09:03:46 | elapsed 7.54std | step 100000 | loss 9.7611 | avg 0.1524 | lr 0.000000 | 0.272s/step | ~120679 tok/s
+2026-02-09 09:08:17 | elapsed 7.62std | step 101000 | loss 9.7708 | avg 0.1528 | lr 0.000000 | 0.271s/step | ~120740 tok/s
+2026-02-09 09:12:49 | elapsed 7.69std | step 102000 | loss 9.7751 | avg 0.1528 | lr 0.000000 | 0.272s/step | ~120691 tok/s
+2026-02-09 09:17:20 | elapsed 7.77std | step 103000 | loss 9.7766 | avg 0.1527 | lr 0.000000 | 0.271s/step | ~120700 tok/s
+2026-02-09 09:21:52 | elapsed 7.84std | step 104000 | loss 9.7588 | avg 0.1527 | lr 0.000000 | 0.272s/step | ~120679 tok/s
+2026-02-09 09:26:23 | elapsed 7.92std | step 105000 | loss 9.7680 | avg 0.1527 | lr 0.000000 | 0.272s/step | ~120671 tok/s
+2026-02-09 09:30:56 | elapsed 7.99std | step 106000 | loss 9.7557 | avg 0.1526 | lr 0.000000 | 0.273s/step | ~120238 tok/s
+Budget reached -> save & stop
+Job complete and cleaned up.

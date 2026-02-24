@@ -86,7 +86,30 @@ class FFNComponent(torch.nn.Module):
 
     def forward(self, hidden_states):
         return self.dense_out(self.nonlin(self.dense_in(hidden_states)))
+'''
 
+class FFNComponent(torch.nn.Module):
+    """LLaMA-style SwiGLU FFN (Touvron et al., 2023).
+
+    Computes: down_proj( SiLU(gate_proj(x)) * up_proj(x) )
+
+    With SwiGLU the effective intermediate width is intermed_size (each of gate and up
+    project to intermed_size, the element-wise product keeps that width, then down
+    projects back). 
+    'We use a dimension of 2/3 4d' (Touvron et al., 2023).
+    """
+
+    def __init__(self, hidden_size, intermed_size, nonlin_fn=None, use_bias=False):
+        super().__init__()
+        # LLaMA uses no bias in FFN projections
+        self.gate_proj = torch.nn.Linear(hidden_size, intermed_size, bias=use_bias)
+        self.up_proj = torch.nn.Linear(hidden_size, intermed_size, bias=use_bias)
+        self.down_proj = torch.nn.Linear(intermed_size, hidden_size, bias=use_bias)
+        self.act = torch.nn.SiLU()
+
+    def forward(self, hidden_states):
+        return self.down_proj(self.act(self.gate_proj(hidden_states)) * self.up_proj(hidden_states))
+'''
 
 class TransformerLayer(torch.nn.Module):
     """A transformer-encoder structure based on the components from above."""

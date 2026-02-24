@@ -1,0 +1,9 @@
+=== Host: ramses16330 ===
+GPU 0: NVIDIA H100 (UUID: GPU-3f80849c-fbf9-fb06-ef41-0fb14d3a84d2)
+  MIG 2g.24gb     Device  0: (UUID: MIG-ad582d4b-cb87-5e95-90c2-06ae370e4a54)
+torch 2.2.1 | cuda True
+wandb 0.24.0
+[2026-01-18 18:24:03,925] GPU : NVIDIA H100 MIG 2g.24gb. CUDA: 12.1.
+[2026-01-18 18:24:03,945] Platform: linux, Python: 3.11.8, PyTorch: 2.2.1
+[2026-01-18 18:24:03,945] CPUs: 16, GPUs: 1 on ramses16330.
+[2026-01-18 18:24:03,945] Seeding with random seed 2077893541 on rank 0.

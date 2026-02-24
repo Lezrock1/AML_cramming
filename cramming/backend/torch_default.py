@@ -238,7 +238,7 @@ class TorchEngineMinimal(torch.nn.Module):
         else:
             model_state = load_file(file, device=str(self.setup["device"]))
             # This loader includes a few legacy options:
-            if "encoder.embedding.word_embedding.weight" not in model_state:
+            if "encoder.embedding.word_embedding.weight" not in model_state and "decoder.weight" in model_state:
                 # Hack to save space when saving the model, more clever though would be save the right one in the first place
                 model_state["encoder.embedding.word_embedding.weight"] = model_state["decoder.weight"]
             try:

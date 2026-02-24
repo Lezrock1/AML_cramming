@@ -21,6 +21,11 @@ def main_downstream_process(cfg, setup):
     local_time = time.time()
 
     tokenizer, cfg_arch, model_file = cramming.utils.find_pretrained_checkpoint(cfg)
+    if getattr(cfg_arch, "architectures", None) is None:
+        log.warning(
+            "Checkpoint config has no `architectures`. Falling back to HuggingFace model construction. "
+            "To force ScriptableCrammedBERT, use a checkpoint with a full crammedBERT arch config."
+        )
     tasks = cramming.prepare_task_dataloaders(tokenizer, cfg.eval, cfg.impl)
 
     metrics = dict()
@@ -41,6 +46,7 @@ def main_downstream_process(cfg, setup):
             targets = [evaluate.load(metric_name, cache_dir=cfg.impl.path) for metric_name in task["details"]["target_metrics"]]
             metric = evaluate.CombinedEvaluations(targets)
         # Launch training
+        checked_label_range = False
         model_engine.train(cfg.eval.eval_in_train_mode)
         loss_vals = []
         for epoch in range(cfg.eval.epochs):
@@ -49,6 +55,29 @@ def main_downstream_process(cfg, setup):
             for step, batch in enumerate(task["trainloader"]):
                 # Heavy lifting is moved to engines
                 device_batch = model_engine.to_device(batch, keys=["input_ids", "labels", "attention_mask"])
+                if not checked_label_range:
+                    labels = device_batch["labels"]
+                    model_obj = getattr(model_engine, "model", None)
+                    if hasattr(model_obj, "_orig_mod"):
+                        model_obj = model_obj._orig_mod
+                    model_num_labels = None
+                    if model_obj is not None:
+                        model_num_labels = getattr(model_obj, "num_labels", None)
+                        if model_num_labels is None and getattr(model_obj, "config", None) is not None:
+                            model_num_labels = getattr(model_obj.config, "num_labels", None)
+
+                    if labels.dtype in (torch.long, torch.int64, torch.int32, torch.int16, torch.int8):
+                        min_label = int(labels.min().item())
+                        max_label = int(labels.max().item())
+                        expected_classes = model_num_labels if model_num_labels is not None else task["num_classes"]
+                        log.info(
+                            f"Label check for {task_name}: min={min_label}, max={max_label}, task_num_classes={task['num_classes']}, model_num_labels={model_num_labels}"
+                        )
+                        if min_label < 0 or max_label >= expected_classes:
+                            raise ValueError(
+                                f"Label out of range for task {task_name}: min={min_label}, max={max_label}, task_num_classes={task['num_classes']}, model_num_labels={model_num_labels}"
+                            )
+                    checked_label_range = True
                 loss = model_engine.step(device_batch)
                 loss_vals.append(loss.detach())
                 if cfg.dryrun:
@@ -99,8 +128,14 @@ def main_downstream_process(cfg, setup):
         target_metric_names = task["details"]["target_metrics"]
         for metric_name in target_metric_names:
             target_metrics.append(metrics[task_name][metric_name])
-    metrics[f"{cfg.eval.name}_amean"] = torch.as_tensor(target_metrics).mean().item()
-    metrics[f"{cfg.eval.name}_hmean"] = torch.as_tensor(target_metrics).pow(-1).mean().pow(-1).item()
+    metric_tensor = torch.as_tensor(target_metrics)
+    finite_mask = torch.isfinite(metric_tensor)
+    if finite_mask.any():
+        metrics[f"{cfg.eval.name}_amean"] = metric_tensor[finite_mask].mean().item()
+        metrics[f"{cfg.eval.name}_hmean"] = metric_tensor[finite_mask].pow(-1).mean().pow(-1).item()
+    else:
+        metrics[f"{cfg.eval.name}_amean"] = float("nan")
+        metrics[f"{cfg.eval.name}_hmean"] = float("nan")
     log.info(f"Overall average metric on evaluation {cfg.eval.name} is {metrics[f'{cfg.eval.name}_amean']:.2f}.")
     cramming.utils.wandb_log(
         {f"{cfg.eval.name}_amean": [metrics[f"{cfg.eval.name}_amean"]], f"{cfg.eval.name}_hmean": [metrics[f"{cfg.eval.name}_hmean"]]},
@@ -137,7 +172,17 @@ def validate(model_engine, validloader, metric, setup, cfg):
         log.info("Value Error in metrics computation, maybe non-finite values in prediction. Returning backup score.")
         eval_metric = metric.compute(predictions=[0, 1], references=[1, 0])  # spoof terrible result if metric computation fails
     model_engine.train(cfg.eval.eval_in_train_mode)
-    return {k: float(v) for k, v in eval_metric.items()}  # force float returns
+    cleaned = {}
+    for k, v in eval_metric.items():
+        try:
+            fv = float(v)
+        except Exception:
+            fv = float("nan")
+        if torch.isnan(torch.tensor(fv)):
+            log.info(f"Metric {k} is NaN; replacing with 0.0 for aggregation.")
+            fv = 0.0
+        cleaned[k] = fv
+    return cleaned  # force float returns
 
 
 @hydra.main(config_path="cramming/config", config_name="cfg_eval", version_base="1.1")

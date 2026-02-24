@@ -1,0 +1,39 @@
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+Fetching 3 files:   0%|          | 0/3 [00:00<?, ?it/s]Fetching 3 files: 100%|██████████| 3/3 [00:00<00:00, 73156.47it/s]
+Traceback (most recent call last):
+  File "/home/group.kurse/jnoow006/cramming/pretrain_LLaMA_base.py", line 295, in <module>
+    train()
+  File "/home/group.kurse/jnoow006/cramming/pretrain_LLaMA_base.py", line 212, in train
+    out = model(**batch)
+          ^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/transformers/models/llama/modeling_llama.py", line 1209, in forward
+    loss = loss_fct(shift_logits, shift_labels)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1511, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1520, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/modules/loss.py", line 1179, in forward
+    return F.cross_entropy(input, target, weight=self.weight,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/nn/functional.py", line 3059, in cross_entropy
+    return torch._C._nn.cross_entropy_loss(input, target, weight, _Reduction.get_enum(reduction), ignore_index, label_smoothing)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.cuda.OutOfMemoryError: CUDA out of memory. Tried to allocate 7.94 GiB. GPU 0 has a total capacity of 93.09 GiB of which 5.18 GiB is free. Including non-PyTorch memory, this process has 87.90 GiB memory in use. Of the allocated memory 82.35 GiB is allocated by PyTorch, and 4.45 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Fatal Python error: PyGILState_Release: thread state 0x7fb5680e5a50 must be current when releasing
+Python runtime state: finalizing (tstate=0x00000000008a85f8)
+
+Thread 0x00007fb8f52a7240 (most recent call first):
+  <no Python frame>
+/var/spool/slurmd/job4059767/slurm_script: line 22: 2640212 Aborted                 (core dumped) python pretrain_LLaMA_base.py

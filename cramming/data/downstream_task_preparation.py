@@ -77,7 +77,10 @@ def prepare_task_dataloaders(tokenizer, cfg_eval, cfg_impl):
             )
 
             if "label" in examples:
-                result["labels"] = examples["label"]
+                if task_details.regression:
+                    result["labels"] = [float(x) for x in examples["label"]]
+                else:
+                    result["labels"] = examples["label"]
             elif "answer" in examples:
                 result["labels"] = [[answer == l for l in label_list].index(True) for answer in examples["answer"]]
             elif "answers" in examples:  # this is RECORD-specific stuff

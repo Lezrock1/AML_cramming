@@ -1,0 +1,9 @@
+GPU 0: NVIDIA H100 (UUID: GPU-b9ee0414-965a-5074-079a-4fcc8d617236)
+torch 2.2.1 | cuda True
+
+===== Training log started at 2026-02-09 00:02:28 =====
+Log file: outputs/cramLLaMA_8h_H100_wcl_256/pretrain/2026-02-09/00-02-28/cramLLaMA_8h_H100_wcl_256_pretrain.log
+loaded vocab_size: 32768
+Total parameters:  201351936
+dict_keys(['input_ids'])
+<class 'list'> 128 [47, 47, 47, 47, 47, 47, 47, 47, 47, 47]

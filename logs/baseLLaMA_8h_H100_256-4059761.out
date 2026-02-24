@@ -1,0 +1,11 @@
+GPU 0: NVIDIA H100 (UUID: GPU-265a1f7a-2d77-1a76-040d-ae57b96e5e0c)
+torch 2.2.1 | cuda True
+
+===== Training log started at 2026-02-09 00:56:34 =====
+Log file: outputs/baseLLaMA_8h_H100_256/pretrain/2026-02-09/00-56-34/baseLLaMA_8h_H100_256_pretrain.log
+loaded vocab_size: 32768
+Total parameters:  201351936
+dict_keys(['input_ids'])
+<class 'list'> 128 [47, 47, 47, 47, 47, 47, 47, 47, 47, 47]
+Measured 17.25s/optim_step (avg of steps 4-6) -> ~1669 optimizer steps for 8h budget
+2026-02-09 01:01:10 | elapsed 0.08std | step 1000 | loss 10.5705 | avg 0.1661 | lr 0.000000 | 0.270s/step | ~121151 tok/s

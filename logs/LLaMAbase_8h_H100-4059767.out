@@ -1,0 +1,29 @@
+Mon Feb  9 01:16:05 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 580.95.05              Driver Version: 580.95.05      CUDA Version: 13.0     |
++-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA H100                    On  |   00000000:A6:00.0 Off |                    0 |
+| N/A   47C    P0             73W /  700W |       0MiB /  95830MiB |      0%      Default |
+|                                         |                        |             Disabled |
++-----------------------------------------+------------------------+----------------------+
+
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+torch 2.2.1 | cuda True
+
+===== Training log started at 2026-02-09 01:16:08 =====
+Log file: outputs/LLaMAbase_8h_H100/pretrain/2026-02-09/01-16-08/LLaMAbase_8h_H100_pretrain.log
+Train config: {'hf_dataset_id': 'JonasGeiping/the_pile_WordPiecex32768_2efdb9d060d1ae95faf952ec1a50f020', 'base_dir': 'outputs', 'run_name': 'LLaMAbase_8h_H100', 'micro_batch_size': 512, 'print_every': 1000, 'budget_hours': 8, 'max_len': 128, 'use_amp': True, 'gradient_clipping': 1.0, 'batch_size': 8192, 'peak_lr': 0.0003, 'warmup_steps': 2000}
+loaded vocab_size: 32768
+Total parameters:  201351936
+dict_keys(['input_ids'])
+<class 'list'> 128 [47, 47, 47, 47, 47, 47, 47, 47, 47, 47]

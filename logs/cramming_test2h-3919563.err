@@ -1,0 +1,38 @@
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+wandb: Tracking run with wandb version 0.16.6
+wandb: W&B syncing is set to `offline` in this directory.  
+wandb: Run `wandb online` or set WANDB_MODE=online to enable cloud syncing.
+wandb: 
+wandb: Run history:
+wandb: batch_size ▁▁▁▂▂▂▃▃▃▄▄▄▅▅▅▅▆▆▆▇▇▇▇█████████████████
+wandb:      epoch ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:       loss ▆▇██▇▇▆▅▅▄▄▃▃▃▃▃▃▂▂▂▂▂▂▂▂▂▁▂▂▂▂▂▁▁▁▁▁▁▁▁
+wandb:         lr ▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇████▇▆▅▅▄▃▂▂▁
+wandb: seq_length ▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁
+wandb:       step ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb:    tok/sec ▁▄▆▆▇▇▇▇▆▇▇█▇▅▅▇▇▆▇▅▇▇▇▇▇▆▇▇▅▇▇▇▇▇▇███▇▇
+wandb:     tokens ▁▁▁▁▂▂▂▂▂▃▃▃▃▃▃▄▄▄▄▄▅▅▅▅▅▅▆▆▆▆▆▇▇▇▇▇▇███
+wandb: train_time █▅▃▃▂▂▂▂▃▂▂▁▂▄▄▂▂▃▂▄▂▂▂▂▂▃▂▂▄▂▂▂▂▂▂▁▁▁▂▂
+wandb: 
+wandb: Run summary:
+wandb:        GPU NVIDIA H100 MIG 2g.2...
+wandb:        RAM 1.44952
+wandb:       VRAM 2.79053
+wandb: batch_size 8192
+wandb:      epoch 0
+wandb:        kWh 0.4282
+wandb:       loss 2.94751
+wandb:         lr 1e-05
+wandb:    numGPUs 1
+wandb: seq_length 128
+wandb:       step 309000
+wandb:    tok/sec 44299
+wandb:     tokens 316416000
+wandb: train_time 0.02312
+wandb: 
+wandb: You can sync this run to the cloud by running:
+wandb: wandb sync /home/group.kurse/jnoow006/cramming/outputs/wandb/wandb/offline-run-20260118_182718-kr883271
+wandb: Find logs at: /home/group.kurse/jnoow006/cramming/outputs/wandb/wandb/offline-run-20260118_182718-kr883271/logs

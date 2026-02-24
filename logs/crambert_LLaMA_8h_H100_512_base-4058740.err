@@ -1,0 +1,3 @@
+/home/group.kurse/jnoow006/.conda/envs/cram/lib/python3.11/site-packages/torch/cuda/__init__.py:54: FutureWarning: The pynvml package is deprecated. Please install nvidia-ml-py instead. If you did not install pynvml directly, please report this to the maintainers of the package that installed pynvml for you.
+  import pynvml  # type: ignore[import]
+python: can't open file '/home/group.kurse/jnoow006/cramming/cramming/pretrain_LLaMA_base.py': [Errno 2] No such file or directory

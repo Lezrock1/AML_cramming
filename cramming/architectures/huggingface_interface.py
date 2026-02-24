@@ -23,7 +23,15 @@ def construct_huggingface_model(cfg_arch, vocab_size, downstream_classes=None):
                 configuration.arch["num_labels"] = downstream_classes
         else:
             configuration = OmegaConf.to_container(cfg_arch)
-            configuration = transformers.BertConfig(**configuration, num_labels=downstream_classes)
+            # Override any checkpoint-provided label mappings (often length=2) to match downstream task
+            configuration.pop("id2label", None)
+            configuration.pop("label2id", None)
+            configuration = transformers.BertConfig(
+                **configuration,
+                num_labels=downstream_classes,
+                id2label={i: f"LABEL_{i}" for i in range(downstream_classes)},
+                label2id={f"LABEL_{i}": i for i in range(downstream_classes)},
+            )
         configuration.vocab_size = vocab_size
 
         configuration.problem_type = None  # always reset this!

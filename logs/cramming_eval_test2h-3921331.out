@@ -1,0 +1,317 @@
+GPU 0: NVIDIA H100 (UUID: GPU-de272ef4-803d-9f53-e516-61ed0d9d3ecf)
+[2026-01-18 20:59:15,204] GPU : NVIDIA H100. CUDA: 12.1.
+[2026-01-18 20:59:15,209] Platform: linux, Python: 3.11.8, PyTorch: 2.2.1
+[2026-01-18 20:59:15,209] CPUs: 8, GPUs: 1 on ramses16307.
+[2026-01-18 20:59:15,209] Seeding with random seed 2674639517 on rank 0.
+[2026-01-18 20:59:15,209] --------------------------------------------------------------
+[2026-01-18 20:59:15,209] --------------Launching downstream finetuning run! ---------------------
+[2026-01-18 20:59:15,214] impl:
+  path: /home/group.kurse/jnoow006/cramming/outputs/data
+  local_staging_dir: null
+  forbid_dataset_preprocessing: false
+  temporary_corpus: false
+  max_raw_chunk_size: 8000000.0
+  print_loss_every_nth_step: 1000
+  save_intermediate_checkpoints: false
+  save_every_nth_step: 10000
+  resume_run_after_preempt: false
+  troubleshoot_strategy: none
+  early_termination:
+    enabled: false
+    budget: 3
+    loss_threshold: 6.0
+  microbatch_size: 8
+  threads: 32
+  benchmark: true
+  deterministic: false
+  non_blocking: true
+  tf32_allowed: true
+  matmul_precision: high
+  pad_to_multiple_of: 8
+  shuffle_in_dataloader: true
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true
+  default_precision: float
+  dist_backend: nccl
+  sharing_strategy: null
+  enable_huggingface_offline_mode: false
+  local_rank: 0
+  push_to_huggingface_hub: false
+  hf_directoy_name: test-crammedBERT-c5
+  add_env_variables: null
+  name: torch-default
+  mixed_precision: true
+  grad_scaling: true
+  mixed_precision_target_dtype: float16
+  zero_redundancy_optimizer: false
+  broadcast_buffers: false
+  bucket_cap_mb: 25
+  gradient_as_bucket_view: true
+  static_graph: false
+  foreach_optimizer: false
+  compile_torch: false
+  mode: null
+  dynamic: false
+  fullgraph: true
+  backend: inductor
+  _inductor_vars:
+    max_autotune_gemm: true
+    max_autotune_pointwise: false
+    triton:
+      cudagraphs: true
+      cudagraph_trees: false
+    permute_fusion: true
+    shape_padding: true
+  enable_mem_efficient_sdp: true
+  enable_math_sdp: true
+  enable_flash_sdp: true
+wandb:
+  enabled: false
+  entity: null
+  project: cramming-eval
+  tags: []
+eval:
+  optim:
+    type: AdamW
+    lr: 4.0e-05
+    betas:
+    - 0.9
+    - 0.98
+    eps: 1.0e-06
+    weight_decay: 0.0
+    amsgrad: false
+  tasks:
+    cola:
+      collection: glue
+      regression: false
+      structure:
+      - sentence
+      target_metrics:
+      - matthews_correlation
+    mnli:
+      collection: glue
+      regression: false
+      structure:
+      - premise
+      - hypothesis
+      target_metrics:
+      - accuracy
+      - accuracy_extra
+    mrpc:
+      collection: glue
+      regression: false
+      structure:
+      - sentence1
+      - sentence2
+      target_metrics:
+      - f1
+    qnli:
+      collection: glue
+      regression: false
+      structure:
+      - question
+      - sentence
+      target_metrics:
+      - accuracy
+    qqp:
+      collection: glue
+      regression: false
+      structure:
+      - question1
+      - question2
+      target_metrics:
+      - f1
+    rte:
+      collection: super_glue
+      regression: false
+      structure:
+      - premise
+      - hypothesis
+      target_metrics:
+      - accuracy
+    sst2:
+      collection: glue
+      regression: false
+      structure:
+      - sentence
+      target_metrics:
+      - accuracy
+    stsb:
+      collection: glue
+      regression: true
+      structure:
+      - sentence1
+      - sentence2
+      target_metrics:
+      - pearson
+  name: GLUE
+  evaluation_set: validation
+  checkpoint: latest
+  path: /home/group.kurse/jnoow006/cramming/outputs/data
+  max_seq_length: 128
+  batch_size: 16
+  batch_size_ramp: 0
+  gradient_clipping: null
+  limited_decay_keys:
+  - bias
+  - LayerNorm.bias
+  - LayerNorm.weight
+  - norm
+  scheduler: cosine-decay
+  optim_mod:
+    name: none
+  eval_in_train_mode: true
+  epochs: 5
+  warmup_steps: 0.1
+  cooldown_steps: 0
+  steps: null
+  testing:
+    batch_size: 128
+  arch_modifications:
+    classification_head:
+      pooler: zero_index
+      include_ff_layer: true
+      nonlin: Tanh
+base_dir: /home/group.kurse/jnoow006/cramming/outputs
+seed: 2674639517
+name: test2h
+dryrun: false
+original_cwd: /home/group.kurse/jnoow006/cramming
+
+{'architectures': ['ScriptableCrammedBERT'], 'num_transformer_layers': 16, 'hidden_size': 768, 'intermed_size': 3072, 'hidden_dropout_prob': 0.1, 'norm': 'LayerNorm', 'norm_eps': 1e-12, 'norm_scheme': 'pre', 'nonlin': 'GELUglu', 'tie_weights': True, 'decoder_bias': False, 'sparse_prediction': 0.25, 'loss': 'cross-entropy', 'objective_layout': 'MLM', 'embedding': {'vocab_size': None, 'pos_embedding': 'scaled-sinusoidal', 'dropout_prob': 0.1, 'pad_token_id': 0, 'max_seq_length': 128, 'embedding_dim': 768, 'normalization': True, 'stable_low_precision': False}, 'attention': {'type': 'self-attention', 'causal_attention': False, 'num_attention_heads': 12, 'dropout_prob': 0.1, 'skip_output_projection': False, 'qkv_bias': False, 'rotary_embedding': False, 'seq_op_in_fp32': False, 'sequence_op': 'torch-softmax'}, 'init': {'type': 'normal', 'std': 0.02}, 'ffn_layer_frequency': 1, 'skip_head_transform': True, 'use_bias': False, 'final_norm': True, 'num_labels': None, 'classification_head': {'pooler': 'zero_index', 'include_ff_layer': True, 'head_dim': 1024, 'nonlin': 'Tanh', 'classifier_dropout': 0.1}}
+[2026-01-18 20:59:15,235] Loading from checkpoint /home/group.kurse/jnoow006/cramming/outputs/test2h/checkpoints/ScriptableCrammedBERT_2026-01-18_2.7844/model.safetensors...
+[2026-01-18 20:59:15,236] Preparing data for task glue-cola.
+[2026-01-18 20:59:20,502] cola has classes ['unacceptable', 'acceptable'].
+[2026-01-18 20:59:20,664] Random sentence with seq_length 128 from trainset of size 8,551: ...
+[2026-01-18 20:59:20,664] <cls> this should be the beginning of a beautiful friendship. <sep> <sep>
+[2026-01-18 20:59:20,664] ... is tokenized into ...
+[2026-01-18 20:59:20,664] <cls>_this_should_be_the_beginning_of_a_beautiful_friendship_._<sep>_<sep>
+[2026-01-18 20:59:20,665] Correct Answer: acceptable
+[2026-01-18 20:59:20,665] Random sentence from validset of size 1,043: ...
+[2026-01-18 20:59:20,665] <cls> she said she talked to those students but i don't know how many. <sep> <sep>
+[2026-01-18 20:59:20,665] Correct Answer: unacceptable
+[2026-01-18 20:59:20,665] Preparing data for task glue-mnli.
+[2026-01-18 20:59:27,283] mnli has classes ['entailment', 'neutral', 'contradiction'].
+[2026-01-18 20:59:40,673] Random sentence with seq_length 128 from trainset of size 392,702: ...
+[2026-01-18 20:59:40,675] <cls> the certification provision, now contained in 31 u. s. c. <sep> the provisions are contained in the 35 usc <sep>
+[2026-01-18 20:59:40,675] ... is tokenized into ...
+[2026-01-18 20:59:40,675] <cls>_the_certification_provision_,_now_contained_in_31_u_._s_._c_._<sep>_the_provisions_are_contained_in_the_35_usc_<sep>
+[2026-01-18 20:59:40,675] Correct Answer: contradiction
+[2026-01-18 20:59:40,676] Random sentence from validset of size 9,815: ...
+[2026-01-18 20:59:40,676] <cls> the last stages of uploading are like a mental dry - heave. <sep> there's really no discernible feeling when to comes to uploading. <sep>
+[2026-01-18 20:59:40,676] Correct Answer: contradiction
+[2026-01-18 20:59:40,676] Preparing data for task glue-mrpc.
+[2026-01-18 20:59:44,879] mrpc has classes ['not_equivalent', 'equivalent'].
+[2026-01-18 20:59:45,048] Random sentence with seq_length 128 from trainset of size 3,668: ...
+[2026-01-18 20:59:45,048] <cls> but white house spokesman ari fleischer said yesterday : " the steps the iranians claim to have taken in terms of capturing al - qa'ida are insufficient. " <sep> " the steps that the iranians claim to have taken in terms of capturing al - qaida are insufficient. <sep>
+[2026-01-18 20:59:45,048] ... is tokenized into ...
+[2026-01-18 20:59:45,049] <cls>_but_white_house_spokesman_ari_fle_##ische_##r_said_yesterday_:_"_the_steps_the_iranians_claim_to_have_taken_in_terms_of_capturing_al_-_qa_'_ida_are_insufficient_._"_<sep>_"_the_steps_that_the_iranians_claim_to_have_taken_in_terms_of_capturing_al_-_qa_##ida_are_insufficient_._<sep>
+[2026-01-18 20:59:45,049] Correct Answer: equivalent
+[2026-01-18 20:59:45,049] Random sentence from validset of size 408: ...
+[2026-01-18 20:59:45,049] <cls> judge craig doran said it wasn't his role to determine if hovan was " an evil man " but maintained that " he has committed an evil act. " <sep> judge craig doran said he couldn't determine if hovan was " an evil man " but said he " has committed an evil act. " <sep>
+[2026-01-18 20:59:45,050] Correct Answer: equivalent
+[2026-01-18 20:59:45,050] Preparing data for task glue-qnli.
+[2026-01-18 20:59:49,036] qnli has classes ['entailment', 'not_entailment'].
+[2026-01-18 20:59:52,992] Random sentence with seq_length 128 from trainset of size 104,743: ...
+[2026-01-18 20:59:52,993] <cls> what terms does behavorial science use instead of using gender binary conceptualization? <sep> androphilia and gynephilia are terms used in behavioral science to describe sexual orientation as an alternative to a gender binary conceptualization. <sep>
+[2026-01-18 20:59:52,993] ... is tokenized into ...
+[2026-01-18 20:59:52,993] <cls>_what_terms_does_behav_##orial_science_use_instead_of_using_gender_binary_conceptual_##ization_?_<sep>_and_##roph_##ilia_and_gyn_##ep_##hi_##lia_are_terms_used_in_behavioral_science_to_describe_sexual_orientation_as_an_alternative_to_a_gender_binary_conceptual_##ization_._<sep>
+[2026-01-18 20:59:52,994] Correct Answer: entailment
+[2026-01-18 20:59:52,994] Random sentence from validset of size 5,463: ...
+[2026-01-18 20:59:52,994] <cls> in latin america what is the most revered skin color? <sep> the rhetoric of colonizers being racially superior appears to have achieved its purpose, for example throughout latin america " whiteness " is still prized today and various forms of blanqueamiento ( whitening ) are common. <sep>
+[2026-01-18 20:59:52,994] Correct Answer: entailment
+[2026-01-18 20:59:52,994] Preparing data for task glue-qqp.
+[2026-01-18 20:59:58,024] qqp has classes ['not_duplicate', 'duplicate'].
+[2026-01-18 21:00:08,438] Random sentence with seq_length 128 from trainset of size 363,846: ...
+[2026-01-18 21:00:08,439] <cls> determinants of aspiration? <sep> the zohar written 2000 years ago? <sep>
+[2026-01-18 21:00:08,439] ... is tokenized into ...
+[2026-01-18 21:00:08,439] <cls>_determinants_of_aspiration_?_<sep>_the_zo_##har_written_2000_years_ago_?_<sep>
+[2026-01-18 21:00:08,440] Correct Answer: not_duplicate
+[2026-01-18 21:00:08,440] Random sentence from validset of size 40,430: ...
+[2026-01-18 21:00:08,440] <cls> which are the best mystery movies of all time? <sep> which are some of the best mystery movies? <sep>
+[2026-01-18 21:00:08,440] Correct Answer: duplicate
+[2026-01-18 21:00:08,440] Preparing data for task super_glue-rte.
+[2026-01-18 21:00:13,197] rte has classes ['entailment', 'not_entailment'].
+[2026-01-18 21:00:13,348] Random sentence with seq_length 128 from trainset of size 2,490: ...
+[2026-01-18 21:00:13,348] <cls> of irish descent, he was born in brookline, mass., on may 29, 1917. graduating from harvard in 1940, he entered the navy. in 1943, when his pt boat was rammed and sunk by a japanese destroyer, kennedy, despite grave injuries, led the survivors through perilous waters to safety. back from the war, he became a democratic congressman from the boston area, advancing in 1953 to the senate. he married jacqueline bouvier on sept. 12, 1953. in 1955, while recuperating from a back operation, he wrote " profiles in <sep> john fitzgerald kennedy was shot dead in 1963. <sep>
+[2026-01-18 21:00:13,348] ... is tokenized into ...
+[2026-01-18 21:00:13,349] <cls>_of_irish_descent_,_he_was_born_in_brook_##line_,_mass_.,_on_may_29_,_1917_._graduating_from_harvard_in_1940_,_he_entered_the_navy_._in_1943_,_when_his_pt_boat_was_ram_##med_and_sunk_by_a_japanese_destroyer_,_kennedy_,_despite_grave_injuries_,_led_the_survivors_through_peril_##ous_waters_to_safety_._back_from_the_war_,_he_became_a_democratic_congressman_from_the_boston_area_,_advancing_in_1953_to_the_senate_._he_married_jacqu_##eline_bou_##vie_##r_on_sept_._12_,_1953_._in_1955_,_while_rec_##uper_##ating_from_a_back_operation_,_he_wrote_"_profiles_in_<sep>_john_fitzgerald_kennedy_was_shot_dead_in_1963_._<sep>
+[2026-01-18 21:00:13,349] Correct Answer: not_entailment
+[2026-01-18 21:00:13,349] Random sentence from validset of size 277: ...
+[2026-01-18 21:00:13,349] <cls> the town is also home to the dalai lama and to more than 10, 000 tibetans living in exile. <sep> the dalai lama has been living in exile since 10, 000. <sep>
+[2026-01-18 21:00:13,350] Correct Answer: not_entailment
+[2026-01-18 21:00:13,350] Preparing data for task glue-sst2.
+[2026-01-18 21:00:17,753] sst2 has classes ['negative', 'positive'].
+[2026-01-18 21:00:19,098] Random sentence with seq_length 128 from trainset of size 67,349: ...
+[2026-01-18 21:00:19,099] <cls> a satisfying kids flck <sep> <sep>
+[2026-01-18 21:00:19,099] ... is tokenized into ...
+[2026-01-18 21:00:19,099] <cls>_a_satisfying_kids_fl_##ck_<sep>_<sep>
+[2026-01-18 21:00:19,100] Correct Answer: positive
+[2026-01-18 21:00:19,100] Random sentence from validset of size 872: ...
+[2026-01-18 21:00:19,100] <cls> the overall effect is less like a children's movie than a recruitment film for future hollywood sellouts. <sep> <sep>
+[2026-01-18 21:00:19,100] Correct Answer: negative
+[2026-01-18 21:00:19,100] Preparing data for task glue-stsb.
+[2026-01-18 21:00:23,238] Random sentence with seq_length 128 from trainset of size 5,749: ...
+[2026-01-18 21:00:23,240] <cls> estonian officials stated that some of the cyber attacks that caused estonian government websites to shut down temporarily came from computers in the administration of russia including in the office of president vladimir putin. <sep> officials in estonia including prime minister andrus ansip have claimed that some of the cyber attacks came from russian government computers including computers in the office of russian president vladimir putin. <sep>
+[2026-01-18 21:00:23,240] ... is tokenized into ...
+[2026-01-18 21:00:23,240] <cls>_estonia_##n_officials_stated_that_some_of_the_cyber_attacks_that_caused_estonia_##n_government_websites_to_shut_down_temporarily_came_from_computers_in_the_administration_of_russia_including_in_the_office_of_president_vladimir_putin_._<sep>_officials_in_estonia_including_prime_minister_and_##rus_ans_##ip_have_claimed_that_some_of_the_cyber_attacks_came_from_russian_government_computers_including_computers_in_the_office_of_russian_president_vladimir_putin_._<sep>
+[2026-01-18 21:00:23,241] Correct Answer: 3.799999952316284
+[2026-01-18 21:00:23,241] Random sentence from validset of size 1,500: ...
+[2026-01-18 21:00:23,241] <cls> in addition to oil, make sure the grill is nice and hot before you start cooking. <sep> i'd been using paper towels to oil the grill, and i just discovered that newspapers work a lot better. <sep>
+[2026-01-18 21:00:23,241] Correct Answer: 1.600000023841858
+[2026-01-18 21:00:23,241] Finetuning task cola with 2 classes for 5340 steps.
+[2026-01-18 21:00:24,174] Model with architecture ScriptableCrammedBERT loaded with 120,379,395 parameters.
+[2026-01-18 21:00:25,112] State dict difference is  ScriptableLMForSequenceClassification:
+	Missing key(s) in state_dict: "pooler.dense.weight", "pooler.dense.bias", "head.weight", "head.bias". 
+	Unexpected key(s) in state_dict: "decoder.weight". ... Ok?
+[2026-01-18 21:00:48,210] Train loss 0.9088 at step 1067 with lr 0.00004. [Avg: 0.6314] after epoch 0. Perf: 0.3697min per epoch (49309t/s). Estimated Total Train: 0:01:50.896856.
+[2026-01-18 21:00:48,212] Validation metric is matthews_correlation: 0.0000 after epoch 0.
+[2026-01-18 21:01:10,145] Train loss 0.5959 at step 1067 with lr 0.00003. [Avg: 0.6002] after epoch 1. Perf: 0.3655min per epoch (49864t/s). Estimated Total Train: 0:01:49.660479.
+[2026-01-18 21:01:10,146] Validation metric is matthews_correlation: 0.0900 after epoch 1.
+[2026-01-18 21:01:31,999] Train loss 0.3274 at step 1067 with lr 0.00002. [Avg: 0.5210] after epoch 2. Perf: 0.3642min per epoch (50046t/s). Estimated Total Train: 0:01:49.263465.
+[2026-01-18 21:01:32,000] Validation metric is matthews_correlation: 0.1160 after epoch 2.
+[2026-01-18 21:01:53,849] Train loss 0.4397 at step 1067 with lr 0.00000. [Avg: 0.3949] after epoch 3. Perf: 0.3641min per epoch (50055t/s). Estimated Total Train: 0:01:49.242513.
+[2026-01-18 21:01:53,850] Validation metric is matthews_correlation: 0.1455 after epoch 3.
+[2026-01-18 21:02:15,651] Train loss 0.1013 at step 1067 with lr 0.00000. [Avg: 0.2977] after epoch 4. Perf: 0.3633min per epoch (50167t/s). Estimated Total Train: 0:01:49.000220.
+[2026-01-18 21:02:15,652] Validation metric is matthews_correlation: 0.1604 after epoch 4.
+[2026-01-18 21:02:15,652] Finetuning task mnli with 3 classes for 245435 steps.
+[2026-01-18 21:02:16,583] Model with architecture ScriptableCrammedBERT loaded with 120,380,420 parameters.
+[2026-01-18 21:02:17,351] State dict difference is  ScriptableLMForSequenceClassification:
+	Missing key(s) in state_dict: "pooler.dense.weight", "pooler.dense.bias", "head.weight", "head.bias". 
+	Unexpected key(s) in state_dict: "decoder.weight". ... Ok?
+[2026-01-18 21:17:55,608] Train loss 0.8195 at step 49086 with lr 0.00004. [Avg: 0.8277] after epoch 0. Perf: 15.6248min per epoch (53617t/s). Estimated Total Train: 1:18:07.430383.
+[2026-01-18 21:17:55,610] Validation metric is accuracy: 0.6825 after epoch 0.
+[2026-01-18 21:33:22,196] Train loss 0.9390 at step 49086 with lr 0.00003. [Avg: 0.6731] after epoch 1. Perf: 15.4431min per epoch (54248t/s). Estimated Total Train: 1:17:12.927914.
+[2026-01-18 21:33:22,196] Validation metric is accuracy: 0.7191 after epoch 1.
+[2026-01-18 21:48:45,670] Train loss 0.6521 at step 49086 with lr 0.00001. [Avg: 0.5729] after epoch 2. Perf: 15.3912min per epoch (54430t/s). Estimated Total Train: 1:16:57.369193.
+[2026-01-18 21:48:45,671] Validation metric is accuracy: 0.7393 after epoch 2.
+[2026-01-18 22:04:07,541] Train loss 0.3427 at step 49086 with lr 0.00000. [Avg: 0.4738] after epoch 3. Perf: 15.3645min per epoch (54525t/s). Estimated Total Train: 1:16:49.350959.
+[2026-01-18 22:04:07,542] Validation metric is accuracy: 0.7438 after epoch 3.
+[2026-01-18 22:19:31,833] Train loss 0.4873 at step 49086 with lr 0.00000. [Avg: 0.4008] after epoch 4. Perf: 15.4049min per epoch (54382t/s). Estimated Total Train: 1:17:01.455899.
+[2026-01-18 22:19:31,833] Validation metric is accuracy: 0.7419 after epoch 4.
+[2026-01-18 22:19:40,416] Extra validation metric is accuracy: 0.7479 after finetuning.
+[2026-01-18 22:19:40,416] Finetuning task mrpc with 2 classes for 2290 steps.
+[2026-01-18 22:19:41,355] Model with architecture ScriptableCrammedBERT loaded with 120,379,395 parameters.
+[2026-01-18 22:19:42,126] State dict difference is  ScriptableLMForSequenceClassification:
+	Missing key(s) in state_dict: "pooler.dense.weight", "pooler.dense.bias", "head.weight", "head.bias". 
+	Unexpected key(s) in state_dict: "decoder.weight". ... Ok?
+[2026-01-18 22:19:52,121] Train loss 0.7515 at step 457 with lr 0.00003. [Avg: 0.6272] after epoch 0. Perf: 0.1531min per epoch (51071t/s). Estimated Total Train: 0:00:45.915512.
+[2026-01-18 22:19:52,121] Validation metric is accuracy: 0.6838 f1: 0.8025 after epoch 0.
+[2026-01-18 22:20:01,238] Train loss 0.4689 at step 457 with lr 0.00004. [Avg: 0.5860] after epoch 1. Perf: 0.1519min per epoch (51447t/s). Estimated Total Train: 0:00:45.580343.
+[2026-01-18 22:20:01,238] Validation metric is accuracy: 0.6936 f1: 0.8154 after epoch 1.
+[2026-01-18 22:20:10,360] Train loss 0.2730 at step 457 with lr 0.00002. [Avg: 0.4318] after epoch 2. Perf: 0.1520min per epoch (51411t/s). Estimated Total Train: 0:00:45.612059.
+[2026-01-18 22:20:10,361] Validation metric is accuracy: 0.7010 f1: 0.8039 after epoch 2.
+[2026-01-18 22:20:20,394] Train loss 0.3310 at step 457 with lr 0.00001. [Avg: 0.1857] after epoch 3. Perf: 0.1672min per epoch (46742t/s). Estimated Total Train: 0:00:50.167695.
+[2026-01-18 22:20:20,395] Validation metric is accuracy: 0.7255 f1: 0.8250 after epoch 3.
+[2026-01-18 22:20:30,423] Train loss 0.0150 at step 457 with lr 0.00000. [Avg: 0.0743] after epoch 4. Perf: 0.1671min per epoch (46769t/s). Estimated Total Train: 0:00:50.139718.
+[2026-01-18 22:20:30,423] Validation metric is accuracy: 0.7181 f1: 0.8160 after epoch 4.
+[2026-01-18 22:20:30,423] Finetuning task qnli with 2 classes for 65460 steps.
+[2026-01-18 22:20:31,355] Model with architecture ScriptableCrammedBERT loaded with 120,379,395 parameters.
+[2026-01-18 22:20:31,684] State dict difference is  ScriptableLMForSequenceClassification:
+	Missing key(s) in state_dict: "pooler.dense.weight", "pooler.dense.bias", "head.weight", "head.bias". 
+	Unexpected key(s) in state_dict: "decoder.weight". ... Ok?
+[2026-01-18 22:24:39,974] Train loss 0.5204 at step 13091 with lr 0.00004. [Avg: 0.5718] after epoch 0. Perf: 4.1264min per epoch (54149t/s). Estimated Total Train: 0:20:37.910609.
+[2026-01-18 22:24:39,974] Validation metric is accuracy: 0.7999 after epoch 0.
+[2026-01-18 22:28:47,417] Train loss 0.2615 at step 13091 with lr 0.00003. [Avg: 0.4424] after epoch 1. Perf: 4.1240min per epoch (54179t/s). Estimated Total Train: 0:20:37.213395.
+[2026-01-18 22:28:47,417] Validation metric is accuracy: 0.7653 after epoch 1.

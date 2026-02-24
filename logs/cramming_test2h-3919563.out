@@ -1,0 +1,493 @@
+=== Host: ramses16330 ===
+GPU 0: NVIDIA H100 (UUID: GPU-3f80849c-fbf9-fb06-ef41-0fb14d3a84d2)
+  MIG 2g.24gb     Device  0: (UUID: MIG-ad582d4b-cb87-5e95-90c2-06ae370e4a54)
+torch 2.2.1 | cuda True
+wandb 0.16.6
+[2026-01-18 18:27:17,714] GPU : NVIDIA H100 MIG 2g.24gb. CUDA: 12.1.
+[2026-01-18 18:27:17,734] Platform: linux, Python: 3.11.8, PyTorch: 2.2.1
+[2026-01-18 18:27:17,735] CPUs: 16, GPUs: 1 on ramses16330.
+[2026-01-18 18:27:17,735] Seeding with random seed 2703007103 on rank 0.
+[2026-01-18 18:27:21,024] --------------------------------------------------------------
+[2026-01-18 18:27:21,025] --------------Launching pretraining run! ---------------------
+[2026-01-18 18:27:21,029] arch:
+  architectures:
+  - ScriptableCrammedBERT
+  num_transformer_layers: 16
+  hidden_size: 768
+  intermed_size: 3072
+  hidden_dropout_prob: 0.1
+  norm: LayerNorm
+  norm_eps: 1.0e-12
+  norm_scheme: pre
+  nonlin: GELUglu
+  tie_weights: true
+  decoder_bias: false
+  sparse_prediction: 0.25
+  loss: cross-entropy
+  objective_layout: MLM
+  embedding:
+    vocab_size: null
+    pos_embedding: scaled-sinusoidal
+    dropout_prob: 0.1
+    pad_token_id: 0
+    max_seq_length: 128
+    embedding_dim: 768
+    normalization: true
+    stable_low_precision: false
+  attention:
+    type: self-attention
+    causal_attention: false
+    num_attention_heads: 12
+    dropout_prob: 0.1
+    skip_output_projection: false
+    qkv_bias: false
+    rotary_embedding: false
+    seq_op_in_fp32: false
+    sequence_op: torch-softmax
+  init:
+    type: normal
+    std: 0.02
+  ffn_layer_frequency: 1
+  skip_head_transform: true
+  use_bias: false
+  final_norm: true
+  num_labels: null
+  classification_head:
+    pooler: avg
+    include_ff_layer: true
+    head_dim: 1024
+    nonlin: Tanh
+    classifier_dropout: 0.1
+data:
+  name: pile-readymade
+  sources:
+    hub:
+      provider: hub
+  hf_location: JonasGeiping/the_pile_WordPiecex32768_2efdb9d060d1ae95faf952ec1a50f020
+  streaming: true
+  vocab_size: 32768
+  seq_length: 128
+impl:
+  path: /home/group.kurse/jnoow006/cramming/outputs/data
+  local_staging_dir: null
+  forbid_dataset_preprocessing: false
+  temporary_corpus: false
+  max_raw_chunk_size: 8000000.0
+  print_loss_every_nth_step: 1000
+  save_intermediate_checkpoints: false
+  save_every_nth_step: 10000
+  resume_run_after_preempt: false
+  troubleshoot_strategy: none
+  early_termination:
+    enabled: false
+    budget: 3
+    loss_threshold: 6.0
+  microbatch_size: 8
+  threads: 16
+  benchmark: true
+  deterministic: false
+  non_blocking: true
+  tf32_allowed: true
+  matmul_precision: high
+  pad_to_multiple_of: 8
+  shuffle_in_dataloader: false
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true
+  default_precision: float
+  dist_backend: nccl
+  sharing_strategy: null
+  enable_huggingface_offline_mode: false
+  local_rank: 0
+  push_to_huggingface_hub: false
+  hf_directoy_name: test-crammedBERT-c5
+  add_env_variables: null
+  name: torch-default
+  mixed_precision: true
+  grad_scaling: true
+  mixed_precision_target_dtype: float16
+  zero_redundancy_optimizer: false
+  broadcast_buffers: false
+  bucket_cap_mb: 25
+  gradient_as_bucket_view: true
+  static_graph: false
+  foreach_optimizer: false
+  compile_torch: false
+  mode: null
+  dynamic: false
+  fullgraph: false
+  backend: inductor
+  _inductor_vars:
+    max_autotune_gemm: true
+    max_autotune_pointwise: false
+    triton:
+      cudagraphs: true
+      cudagraph_trees: false
+    permute_fusion: true
+    shape_padding: true
+  enable_mem_efficient_sdp: true
+  enable_math_sdp: true
+  enable_flash_sdp: true
+wandb:
+  enabled: true
+  entity: null
+  project: cramming
+  tags: []
+train:
+  optim:
+    type: AdamW
+    lr: 0.001
+    betas:
+    - 0.9
+    - 0.98
+    eps: 1.0e-12
+    weight_decay: 0.01
+    amsgrad: false
+    fused: null
+  optim_mod:
+    name: none
+  name: bert-o4
+  limited_decay_keys:
+  - bias
+  - LayerNorm.bias
+  - LayerNorm.weight
+  - norm
+  warmup_steps: 0
+  cooldown_steps: 0
+  steps: 900000
+  scheduler: budget-triangle2
+  batch_size: 8192
+  batch_size_ramp: 0.6
+  gradient_clipping: 0.5
+  pretrain_in_train_mode: false
+  objective:
+    name: masked-lm
+    mlm_probability: 0.25
+    use_80_20_rule: true
+    disable_mlm: false
+    token_drop: 0.0
+  reverse_dataset_order: false
+  budget: 2
+base_dir: /home/group.kurse/jnoow006/cramming/outputs
+seed: 2703007103
+name: test2h
+budget: 2
+dryrun: false
+original_cwd: /home/group.kurse/jnoow006/cramming
+
+[2026-01-18 18:27:22,187] Model with architecture ScriptableCrammedBERT loaded with 119,589,889 parameters.
+[2026-01-18 18:27:56,031] Train loss 4.5439 at step 1000 with lr 0.00025. [Avg: 3.1428]  Perf: 0.0312s per step (32861t/s). Estimated Total Train: 7:47:25.658112.
+[2026-01-18 18:28:21,346] Train loss 4.0142 at step 2000 with lr 0.00026. [Avg: 4.2758]  Perf: 0.0253s per step (40452t/s). Estimated Total Train: 6:19:42.329965.
+[2026-01-18 18:28:45,739] Train loss 4.6336 at step 3000 with lr 0.00026. [Avg: 4.2787]  Perf: 0.0244s per step (41981t/s). Estimated Total Train: 6:05:52.747393.
+[2026-01-18 18:29:09,814] Train loss 4.3281 at step 4000 with lr 0.00026. [Avg: 4.4009]  Perf: 0.0241s per step (42534t/s). Estimated Total Train: 6:01:07.141914.
+[2026-01-18 18:29:33,676] Train loss 4.0799 at step 5000 with lr 0.00027. [Avg: 4.3613]  Perf: 0.0239s per step (42918t/s). Estimated Total Train: 5:57:53.702288.
+[2026-01-18 18:29:57,384] Train loss 4.5291 at step 6000 with lr 0.00027. [Avg: 4.3343]  Perf: 0.0237s per step (43194t/s). Estimated Total Train: 5:55:36.166978.
+[2026-01-18 18:30:21,032] Train loss 4.2175 at step 7000 with lr 0.00027. [Avg: 4.4063]  Perf: 0.0236s per step (43304t/s). Estimated Total Train: 5:54:42.105446.
+[2026-01-18 18:30:44,591] Train loss 4.4411 at step 8000 with lr 0.00028. [Avg: 4.4561]  Perf: 0.0236s per step (43466t/s). Estimated Total Train: 5:53:22.740383.
+[2026-01-18 18:31:08,243] Train loss 4.4732 at step 9000 with lr 0.00028. [Avg: 4.5010]  Perf: 0.0237s per step (43296t/s). Estimated Total Train: 5:54:45.841012.
+[2026-01-18 18:31:32,079] Train loss 3.9679 at step 10000 with lr 0.00028. [Avg: 4.5711]  Perf: 0.0238s per step (42961t/s). Estimated Total Train: 5:57:32.215219.
+[2026-01-18 18:31:55,770] Train loss 4.1221 at step 11000 with lr 0.00029. [Avg: 4.6250]  Perf: 0.0237s per step (43224t/s). Estimated Total Train: 5:55:21.472120.
+[2026-01-18 18:32:19,178] Train loss 4.0715 at step 12000 with lr 0.00029. [Avg: 4.6441]  Perf: 0.0234s per step (43748t/s). Estimated Total Train: 5:51:06.099215.
+[2026-01-18 18:32:42,567] Train loss 5.0399 at step 13000 with lr 0.00029. [Avg: 4.6925]  Perf: 0.0234s per step (43782t/s). Estimated Total Train: 5:50:49.772930.
+[2026-01-18 18:33:06,052] Train loss 4.5391 at step 14000 with lr 0.00030. [Avg: 4.7642]  Perf: 0.0235s per step (43605t/s). Estimated Total Train: 5:52:15.398698.
+[2026-01-18 18:33:29,406] Train loss 4.7543 at step 15000 with lr 0.00030. [Avg: 4.7426]  Perf: 0.0234s per step (43850t/s). Estimated Total Train: 5:50:16.907930.
+[2026-01-18 18:33:52,764] Train loss 5.3015 at step 16000 with lr 0.00030. [Avg: 4.8404]  Perf: 0.0234s per step (43843t/s). Estimated Total Train: 5:50:20.456815.
+[2026-01-18 18:34:16,075] Train loss 5.1085 at step 17000 with lr 0.00031. [Avg: 4.8216]  Perf: 0.0233s per step (43931t/s). Estimated Total Train: 5:49:38.498912.
+[2026-01-18 18:34:39,396] Train loss 4.8074 at step 18000 with lr 0.00031. [Avg: 4.8180]  Perf: 0.0233s per step (43914t/s). Estimated Total Train: 5:49:46.688447.
+[2026-01-18 18:35:02,676] Train loss 4.8929 at step 19000 with lr 0.00031. [Avg: 4.8863]  Perf: 0.0233s per step (43989t/s). Estimated Total Train: 5:49:10.648141.
+[2026-01-18 18:35:25,936] Train loss 5.1270 at step 20000 with lr 0.00032. [Avg: 4.8319]  Perf: 0.0233s per step (44028t/s). Estimated Total Train: 5:48:52.224584.
+[2026-01-18 18:35:49,193] Train loss 4.4759 at step 21000 with lr 0.00032. [Avg: 4.7850]  Perf: 0.0233s per step (44035t/s). Estimated Total Train: 5:48:48.669047.
+[2026-01-18 18:36:12,446] Train loss 4.9053 at step 22000 with lr 0.00032. [Avg: 4.8290]  Perf: 0.0233s per step (44041t/s). Estimated Total Train: 5:48:45.796509.
+[2026-01-18 18:36:35,714] Train loss 4.5397 at step 23000 with lr 0.00033. [Avg: 4.8971]  Perf: 0.0233s per step (44012t/s). Estimated Total Train: 5:48:59.730263.
+[2026-01-18 18:36:58,945] Train loss 4.9598 at step 24000 with lr 0.00033. [Avg: 4.7881]  Perf: 0.0232s per step (44084t/s). Estimated Total Train: 5:48:25.636811.
+[2026-01-18 18:37:22,190] Train loss 4.7925 at step 25000 with lr 0.00033. [Avg: 4.7513]  Perf: 0.0232s per step (44056t/s). Estimated Total Train: 5:48:38.648958.
+[2026-01-18 18:37:45,409] Train loss 4.8844 at step 26000 with lr 0.00034. [Avg: 4.7478]  Perf: 0.0232s per step (44104t/s). Estimated Total Train: 5:48:15.973349.
+[2026-01-18 18:38:08,616] Train loss 4.6946 at step 27000 with lr 0.00034. [Avg: 4.7771]  Perf: 0.0232s per step (44129t/s). Estimated Total Train: 5:48:04.033871.
+[2026-01-18 18:38:31,839] Train loss 4.2885 at step 28000 with lr 0.00034. [Avg: 4.7242]  Perf: 0.0232s per step (44097t/s). Estimated Total Train: 5:48:19.368811.
+[2026-01-18 18:38:55,034] Train loss 4.4408 at step 29000 with lr 0.00035. [Avg: 4.7345]  Perf: 0.0232s per step (44151t/s). Estimated Total Train: 5:47:53.899841.
+[2026-01-18 18:39:18,234] Train loss 5.4239 at step 30000 with lr 0.00035. [Avg: 4.7044]  Perf: 0.0232s per step (44142t/s). Estimated Total Train: 5:47:58.059840.
+[2026-01-18 18:39:41,434] Train loss 5.4437 at step 31000 with lr 0.00035. [Avg: 4.6842]  Perf: 0.0232s per step (44143t/s). Estimated Total Train: 5:47:57.748489.
+[2026-01-18 18:40:04,615] Train loss 4.7820 at step 32000 with lr 0.00036. [Avg: 4.6680]  Perf: 0.0232s per step (44179t/s). Estimated Total Train: 5:47:40.688567.
+[2026-01-18 18:40:27,842] Train loss 4.7254 at step 33000 with lr 0.00036. [Avg: 4.6819]  Perf: 0.0232s per step (44090t/s). Estimated Total Train: 5:48:22.834010.
+[2026-01-18 18:40:51,061] Train loss 5.0187 at step 34000 with lr 0.00036. [Avg: 4.6111]  Perf: 0.0232s per step (44105t/s). Estimated Total Train: 5:48:15.386696.
+[2026-01-18 18:41:14,282] Train loss 4.2741 at step 35000 with lr 0.00037. [Avg: 4.6360]  Perf: 0.0232s per step (44102t/s). Estimated Total Train: 5:48:16.928859.
+[2026-01-18 18:41:37,502] Train loss 5.3535 at step 36000 with lr 0.00037. [Avg: 4.5814]  Perf: 0.0232s per step (44102t/s). Estimated Total Train: 5:48:17.214460.
+[2026-01-18 18:42:00,720] Train loss 4.5823 at step 37000 with lr 0.00037. [Avg: 4.5535]  Perf: 0.0232s per step (44110t/s). Estimated Total Train: 5:48:13.199730.
+[2026-01-18 18:42:23,947] Train loss 4.6134 at step 38000 with lr 0.00037. [Avg: 4.4808]  Perf: 0.0232s per step (44090t/s). Estimated Total Train: 5:48:22.779937.
+[2026-01-18 18:42:47,173] Train loss 4.9857 at step 39000 with lr 0.00038. [Avg: 4.4679]  Perf: 0.0232s per step (44093t/s). Estimated Total Train: 5:48:21.434970.
+[2026-01-18 18:43:10,375] Train loss 4.8030 at step 40000 with lr 0.00038. [Avg: 4.5394]  Perf: 0.0232s per step (44138t/s). Estimated Total Train: 5:48:00.142951.
+[2026-01-18 18:43:33,587] Train loss 4.3609 at step 41000 with lr 0.00038. [Avg: 4.5038]  Perf: 0.0232s per step (44119t/s). Estimated Total Train: 5:48:08.848758.
+[2026-01-18 18:43:56,926] Train loss 4.3052 at step 42000 with lr 0.00039. [Avg: 4.4799]  Perf: 0.0233s per step (43881t/s). Estimated Total Train: 5:50:02.456617.
+[2026-01-18 18:44:20,155] Train loss 4.5964 at step 43000 with lr 0.00039. [Avg: 4.5062]  Perf: 0.0232s per step (44085t/s). Estimated Total Train: 5:48:24.832792.
+[2026-01-18 18:44:43,377] Train loss 4.2412 at step 44000 with lr 0.00039. [Avg: 4.4241]  Perf: 0.0232s per step (44100t/s). Estimated Total Train: 5:48:17.966552.
+[2026-01-18 18:45:06,617] Train loss 4.9938 at step 45000 with lr 0.00040. [Avg: 4.4079]  Perf: 0.0232s per step (44065t/s). Estimated Total Train: 5:48:34.724350.
+[2026-01-18 18:45:29,817] Train loss 4.2054 at step 46000 with lr 0.00040. [Avg: 4.3721]  Perf: 0.0232s per step (44142t/s). Estimated Total Train: 5:47:58.117990.
+[2026-01-18 18:45:53,042] Train loss 4.8010 at step 47000 with lr 0.00040. [Avg: 4.3090]  Perf: 0.0232s per step (44093t/s). Estimated Total Train: 5:48:21.168680.
+[2026-01-18 18:46:16,224] Train loss 4.2903 at step 48000 with lr 0.00041. [Avg: 4.3108]  Perf: 0.0232s per step (44177t/s). Estimated Total Train: 5:47:41.502886.
+[2026-01-18 18:46:39,420] Train loss 4.2583 at step 49000 with lr 0.00041. [Avg: 4.3433]  Perf: 0.0232s per step (44149t/s). Estimated Total Train: 5:47:54.623394.
+[2026-01-18 18:47:02,629] Train loss 3.9005 at step 50000 with lr 0.00041. [Avg: 4.3275]  Perf: 0.0232s per step (44125t/s). Estimated Total Train: 5:48:05.924077.
+[2026-01-18 18:47:25,832] Train loss 3.9025 at step 51000 with lr 0.00042. [Avg: 4.2604]  Perf: 0.0232s per step (44135t/s). Estimated Total Train: 5:48:01.389427.
+[2026-01-18 18:47:49,051] Train loss 3.9752 at step 52000 with lr 0.00042. [Avg: 4.2248]  Perf: 0.0232s per step (44106t/s). Estimated Total Train: 5:48:14.885230.
+[2026-01-18 18:48:12,264] Train loss 4.4476 at step 53000 with lr 0.00042. [Avg: 4.2285]  Perf: 0.0232s per step (44117t/s). Estimated Total Train: 5:48:10.049744.
+[2026-01-18 18:48:35,462] Train loss 4.5309 at step 54000 with lr 0.00043. [Avg: 4.1583]  Perf: 0.0232s per step (44147t/s). Estimated Total Train: 5:47:55.795841.
+[2026-01-18 18:48:58,666] Train loss 4.4262 at step 55000 with lr 0.00043. [Avg: 4.1014]  Perf: 0.0232s per step (44133t/s). Estimated Total Train: 5:48:02.125640.
+[2026-01-18 18:49:21,871] Train loss 4.0549 at step 56000 with lr 0.00043. [Avg: 4.0964]  Perf: 0.0232s per step (44132t/s). Estimated Total Train: 5:48:02.709932.
+[2026-01-18 18:49:45,105] Train loss 4.1383 at step 57000 with lr 0.00044. [Avg: 4.0911]  Perf: 0.0232s per step (44077t/s). Estimated Total Train: 5:48:28.779073.
+[2026-01-18 18:50:08,318] Train loss 3.9109 at step 58000 with lr 0.00044. [Avg: 4.0402]  Perf: 0.0232s per step (44117t/s). Estimated Total Train: 5:48:09.671230.
+[2026-01-18 18:50:31,496] Train loss 4.6366 at step 59000 with lr 0.00044. [Avg: 4.0362]  Perf: 0.0232s per step (44184t/s). Estimated Total Train: 5:47:38.352685.
+[2026-01-18 18:50:54,668] Train loss 3.5662 at step 60000 with lr 0.00045. [Avg: 3.9913]  Perf: 0.0232s per step (44196t/s). Estimated Total Train: 5:47:32.733779.
+[2026-01-18 18:51:17,827] Train loss 4.2241 at step 61000 with lr 0.00045. [Avg: 3.9633]  Perf: 0.0232s per step (44219t/s). Estimated Total Train: 5:47:21.621494.
+[2026-01-18 18:51:40,992] Train loss 3.5358 at step 62000 with lr 0.00045. [Avg: 4.0220]  Perf: 0.0232s per step (44210t/s). Estimated Total Train: 5:47:26.127820.
+[2026-01-18 18:52:04,165] Train loss 4.0225 at step 63000 with lr 0.00046. [Avg: 3.9816]  Perf: 0.0232s per step (44193t/s). Estimated Total Train: 5:47:33.798079.
+[2026-01-18 18:52:27,421] Train loss 4.1961 at step 64000 with lr 0.00046. [Avg: 3.9709]  Perf: 0.0233s per step (44037t/s). Estimated Total Train: 5:48:48.002572.
+[2026-01-18 18:52:50,633] Train loss 4.4461 at step 65000 with lr 0.00046. [Avg: 3.9587]  Perf: 0.0232s per step (44117t/s). Estimated Total Train: 5:48:09.801264.
+[2026-01-18 18:53:13,843] Train loss 4.0620 at step 66000 with lr 0.00047. [Avg: 3.9044]  Perf: 0.0232s per step (44123t/s). Estimated Total Train: 5:48:06.860490.
+[2026-01-18 18:53:37,015] Train loss 3.9079 at step 67000 with lr 0.00047. [Avg: 3.8788]  Perf: 0.0232s per step (44195t/s). Estimated Total Train: 5:47:33.079033.
+[2026-01-18 18:54:00,178] Train loss 3.5548 at step 68000 with lr 0.00047. [Avg: 3.8411]  Perf: 0.0232s per step (44213t/s). Estimated Total Train: 5:47:24.689083.
+[2026-01-18 18:54:23,364] Train loss 3.3536 at step 69000 with lr 0.00047. [Avg: 3.8152]  Perf: 0.0232s per step (44167t/s). Estimated Total Train: 5:47:46.027021.
+[2026-01-18 18:54:46,531] Train loss 4.2397 at step 70000 with lr 0.00048. [Avg: 3.8544]  Perf: 0.0232s per step (44204t/s). Estimated Total Train: 5:47:28.623776.
+[2026-01-18 18:55:09,678] Train loss 3.4629 at step 71000 with lr 0.00048. [Avg: 3.7742]  Perf: 0.0231s per step (44242t/s). Estimated Total Train: 5:47:10.772066.
+[2026-01-18 18:55:32,842] Train loss 3.4608 at step 72000 with lr 0.00048. [Avg: 3.7876]  Perf: 0.0232s per step (44212t/s). Estimated Total Train: 5:47:25.251918.
+[2026-01-18 18:55:55,980] Train loss 4.7898 at step 73000 with lr 0.00049. [Avg: 3.6917]  Perf: 0.0231s per step (44260t/s). Estimated Total Train: 5:47:02.554207.
+[2026-01-18 18:56:19,133] Train loss 3.3570 at step 74000 with lr 0.00049. [Avg: 3.7122]  Perf: 0.0232s per step (44231t/s). Estimated Total Train: 5:47:15.830927.
+[2026-01-18 18:56:42,269] Train loss 3.5288 at step 75000 with lr 0.00049. [Avg: 3.6908]  Perf: 0.0231s per step (44264t/s). Estimated Total Train: 5:47:00.581174.
+[2026-01-18 18:57:05,405] Train loss 4.0658 at step 76000 with lr 0.00050. [Avg: 3.6767]  Perf: 0.0231s per step (44263t/s). Estimated Total Train: 5:47:01.197653.
+[2026-01-18 18:57:28,566] Train loss 3.6974 at step 77000 with lr 0.00050. [Avg: 3.6813]  Perf: 0.0232s per step (44215t/s). Estimated Total Train: 5:47:23.446469.
+[2026-01-18 18:57:51,701] Train loss 3.6410 at step 78000 with lr 0.00050. [Avg: 3.7389]  Perf: 0.0231s per step (44264t/s). Estimated Total Train: 5:47:00.319819.
+[2026-01-18 18:58:14,837] Train loss 3.4200 at step 79000 with lr 0.00051. [Avg: 3.6862]  Perf: 0.0231s per step (44265t/s). Estimated Total Train: 5:47:00.236564.
+[2026-01-18 18:58:37,987] Train loss 4.1243 at step 80000 with lr 0.00051. [Avg: 3.6784]  Perf: 0.0231s per step (44238t/s). Estimated Total Train: 5:47:12.883501.
+[2026-01-18 18:59:01,130] Train loss 3.6634 at step 81000 with lr 0.00051. [Avg: 3.6821]  Perf: 0.0231s per step (44249t/s). Estimated Total Train: 5:47:07.462435.
+[2026-01-18 18:59:24,283] Train loss 3.3651 at step 82000 with lr 0.00052. [Avg: 3.6662]  Perf: 0.0232s per step (44231t/s). Estimated Total Train: 5:47:16.056662.
+[2026-01-18 18:59:47,432] Train loss 3.1296 at step 83000 with lr 0.00052. [Avg: 3.6451]  Perf: 0.0231s per step (44239t/s). Estimated Total Train: 5:47:12.473230.
+[2026-01-18 19:00:10,477] Train loss 3.2264 at step 84000 with lr 0.00052. [Avg: 3.6286]  Perf: 0.0230s per step (44438t/s). Estimated Total Train: 5:45:38.862205.
+[2026-01-18 19:00:33,555] Train loss 3.0967 at step 85000 with lr 0.00053. [Avg: 3.6627]  Perf: 0.0231s per step (44374t/s). Estimated Total Train: 5:46:08.684936.
+[2026-01-18 19:00:56,604] Train loss 3.8496 at step 86000 with lr 0.00053. [Avg: 3.6389]  Perf: 0.0230s per step (44433t/s). Estimated Total Train: 5:45:41.146159.
+[2026-01-18 19:01:19,645] Train loss 2.5935 at step 87000 with lr 0.00053. [Avg: 3.5899]  Perf: 0.0230s per step (44447t/s). Estimated Total Train: 5:45:34.877515.
+[2026-01-18 19:01:42,703] Train loss 3.3094 at step 88000 with lr 0.00054. [Avg: 3.5636]  Perf: 0.0231s per step (44414t/s). Estimated Total Train: 5:45:50.446987.
+[2026-01-18 19:02:05,851] Train loss 3.1356 at step 89000 with lr 0.00054. [Avg: 3.5772]  Perf: 0.0231s per step (44241t/s). Estimated Total Train: 5:47:11.304860.
+[2026-01-18 19:02:29,002] Train loss 3.0483 at step 90000 with lr 0.00054. [Avg: 3.5568]  Perf: 0.0231s per step (44234t/s). Estimated Total Train: 5:47:14.512568.
+[2026-01-18 19:02:52,150] Train loss 3.9990 at step 91000 with lr 0.00055. [Avg: 3.5101]  Perf: 0.0231s per step (44241t/s). Estimated Total Train: 5:47:11.391335.
+[2026-01-18 19:03:15,279] Train loss 3.2743 at step 92000 with lr 0.00055. [Avg: 3.5492]  Perf: 0.0231s per step (44279t/s). Estimated Total Train: 5:46:53.692832.
+[2026-01-18 19:03:38,420] Train loss 3.8587 at step 93000 with lr 0.00055. [Avg: 3.5214]  Perf: 0.0231s per step (44253t/s). Estimated Total Train: 5:47:05.772643.
+[2026-01-18 19:04:01,559] Train loss 3.1483 at step 94000 with lr 0.00056. [Avg: 3.5193]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.144078.
+[2026-01-18 19:04:24,691] Train loss 3.9819 at step 95000 with lr 0.00056. [Avg: 3.4813]  Perf: 0.0231s per step (44270t/s). Estimated Total Train: 5:46:57.576241.
+[2026-01-18 19:04:47,828] Train loss 4.1681 at step 96000 with lr 0.00056. [Avg: 3.4466]  Perf: 0.0231s per step (44263t/s). Estimated Total Train: 5:47:01.104741.
+[2026-01-18 19:05:10,959] Train loss 3.5274 at step 97000 with lr 0.00056. [Avg: 3.4354]  Perf: 0.0231s per step (44274t/s). Estimated Total Train: 5:46:55.982366.
+[2026-01-18 19:05:34,125] Train loss 4.2315 at step 98000 with lr 0.00057. [Avg: 3.4285]  Perf: 0.0232s per step (44206t/s). Estimated Total Train: 5:47:27.670412.
+[2026-01-18 19:05:57,277] Train loss 3.4421 at step 99000 with lr 0.00057. [Avg: 3.5325]  Perf: 0.0232s per step (44232t/s). Estimated Total Train: 5:47:15.652399.
+[2026-01-18 19:06:20,410] Train loss 2.8309 at step 100000 with lr 0.00057. [Avg: 3.5345]  Perf: 0.0231s per step (44271t/s). Estimated Total Train: 5:46:57.423034.
+[2026-01-18 19:06:43,549] Train loss 3.8826 at step 101000 with lr 0.00058. [Avg: 3.5510]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.146009.
+[2026-01-18 19:07:06,688] Train loss 3.3592 at step 102000 with lr 0.00058. [Avg: 3.5118]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.260808.
+[2026-01-18 19:07:29,895] Train loss 3.3697 at step 103000 with lr 0.00058. [Avg: 3.4709]  Perf: 0.0232s per step (44127t/s). Estimated Total Train: 5:48:05.040236.
+[2026-01-18 19:07:53,352] Train loss 3.3481 at step 104000 with lr 0.00059. [Avg: 3.4700]  Perf: 0.0235s per step (43657t/s). Estimated Total Train: 5:51:49.878659.
+[2026-01-18 19:08:16,498] Train loss 3.3786 at step 105000 with lr 0.00059. [Avg: 3.4714]  Perf: 0.0231s per step (44247t/s). Estimated Total Train: 5:47:08.750324.
+[2026-01-18 19:08:39,616] Train loss 3.7859 at step 106000 with lr 0.00059. [Avg: 3.4436]  Perf: 0.0231s per step (44297t/s). Estimated Total Train: 5:46:44.972649.
+[2026-01-18 19:09:02,746] Train loss 3.6995 at step 107000 with lr 0.00060. [Avg: 3.4612]  Perf: 0.0231s per step (44275t/s). Estimated Total Train: 5:46:55.386701.
+[2026-01-18 19:09:25,896] Train loss 3.5351 at step 108000 with lr 0.00060. [Avg: 3.4095]  Perf: 0.0231s per step (44238t/s). Estimated Total Train: 5:47:12.655835.
+[2026-01-18 19:09:49,084] Train loss 2.9975 at step 109000 with lr 0.00060. [Avg: 3.4195]  Perf: 0.0232s per step (44165t/s). Estimated Total Train: 5:47:47.414904.
+[2026-01-18 19:10:12,631] Train loss 3.5508 at step 110000 with lr 0.00061. [Avg: 3.4338]  Perf: 0.0235s per step (43492t/s). Estimated Total Train: 5:53:10.317678.
+[2026-01-18 19:10:36,132] Train loss 3.1041 at step 111000 with lr 0.00061. [Avg: 3.4097]  Perf: 0.0235s per step (43575t/s). Estimated Total Train: 5:52:29.689937.
+[2026-01-18 19:10:59,626] Train loss 3.6261 at step 112000 with lr 0.00061. [Avg: 3.4179]  Perf: 0.0235s per step (43591t/s). Estimated Total Train: 5:52:21.897798.
+[2026-01-18 19:11:23,186] Train loss 3.1546 at step 113000 with lr 0.00062. [Avg: 3.4038]  Perf: 0.0236s per step (43467t/s). Estimated Total Train: 5:53:22.273464.
+[2026-01-18 19:11:46,824] Train loss 3.7247 at step 114000 with lr 0.00062. [Avg: 3.4020]  Perf: 0.0236s per step (43324t/s). Estimated Total Train: 5:54:32.450995.
+[2026-01-18 19:12:10,360] Train loss 3.4685 at step 115000 with lr 0.00062. [Avg: 3.3817]  Perf: 0.0235s per step (43510t/s). Estimated Total Train: 5:53:01.108475.
+[2026-01-18 19:12:33,912] Train loss 3.4014 at step 116000 with lr 0.00063. [Avg: 3.3969]  Perf: 0.0235s per step (43482t/s). Estimated Total Train: 5:53:14.750619.
+[2026-01-18 19:12:57,381] Train loss 2.9380 at step 117000 with lr 0.00063. [Avg: 3.3721]  Perf: 0.0235s per step (43637t/s). Estimated Total Train: 5:51:59.870210.
+[2026-01-18 19:13:20,531] Train loss 3.2600 at step 118000 with lr 0.00063. [Avg: 3.3609]  Perf: 0.0231s per step (44238t/s). Estimated Total Train: 5:47:12.817841.
+[2026-01-18 19:13:43,656] Train loss 3.1047 at step 119000 with lr 0.00064. [Avg: 3.3248]  Perf: 0.0231s per step (44285t/s). Estimated Total Train: 5:46:50.628676.
+[2026-01-18 19:14:06,799] Train loss 3.9530 at step 120000 with lr 0.00064. [Avg: 3.3535]  Perf: 0.0231s per step (44250t/s). Estimated Total Train: 5:47:06.944447.
+[2026-01-18 19:14:33,199] Train loss 3.4494 at step 121000 with lr 0.00064. [Avg: 3.3267]  Perf: 0.0264s per step (38791t/s). Estimated Total Train: 6:35:58.359861.
+[2026-01-18 19:14:56,343] Train loss 3.3862 at step 122000 with lr 0.00065. [Avg: 3.3414]  Perf: 0.0231s per step (44247t/s). Estimated Total Train: 5:47:08.503990.
+[2026-01-18 19:15:19,483] Train loss 3.8768 at step 123000 with lr 0.00065. [Avg: 3.3347]  Perf: 0.0231s per step (44257t/s). Estimated Total Train: 5:47:03.715496.
+[2026-01-18 19:15:42,635] Train loss 3.4133 at step 124000 with lr 0.00065. [Avg: 3.2932]  Perf: 0.0232s per step (44233t/s). Estimated Total Train: 5:47:15.082483.
+[2026-01-18 19:16:05,771] Train loss 3.6263 at step 125000 with lr 0.00066. [Avg: 3.2849]  Perf: 0.0231s per step (44263t/s). Estimated Total Train: 5:47:01.163106.
+[2026-01-18 19:16:28,928] Train loss 3.3512 at step 126000 with lr 0.00066. [Avg: 3.2700]  Perf: 0.0232s per step (44225t/s). Estimated Total Train: 5:47:18.811612.
+[2026-01-18 19:16:52,064] Train loss 3.3486 at step 127000 with lr 0.00066. [Avg: 3.3176]  Perf: 0.0231s per step (44262t/s). Estimated Total Train: 5:47:01.353006.
+[2026-01-18 19:17:15,213] Train loss 3.0657 at step 128000 with lr 0.00067. [Avg: 3.3849]  Perf: 0.0231s per step (44239t/s). Estimated Total Train: 5:47:12.421947.
+[2026-01-18 19:17:38,347] Train loss 3.1444 at step 129000 with lr 0.00067. [Avg: 3.3370]  Perf: 0.0231s per step (44268t/s). Estimated Total Train: 5:46:58.496561.
+[2026-01-18 19:18:01,486] Train loss 3.7032 at step 130000 with lr 0.00067. [Avg: 3.3407]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.308659.
+[2026-01-18 19:18:24,629] Train loss 3.7504 at step 131000 with lr 0.00067. [Avg: 3.2941]  Perf: 0.0231s per step (44252t/s). Estimated Total Train: 5:47:06.279902.
+[2026-01-18 19:18:47,751] Train loss 3.5731 at step 132000 with lr 0.00068. [Avg: 3.3052]  Perf: 0.0231s per step (44291t/s). Estimated Total Train: 5:46:47.790899.
+[2026-01-18 19:19:10,913] Train loss 2.9612 at step 133000 with lr 0.00068. [Avg: 3.3559]  Perf: 0.0232s per step (44214t/s). Estimated Total Train: 5:47:24.140840.
+[2026-01-18 19:19:34,106] Train loss 3.5453 at step 134000 with lr 0.00068. [Avg: 3.3391]  Perf: 0.0232s per step (44155t/s). Estimated Total Train: 5:47:51.758366.
+[2026-01-18 19:19:57,209] Train loss 3.3912 at step 135000 with lr 0.00069. [Avg: 3.3265]  Perf: 0.0231s per step (44327t/s). Estimated Total Train: 5:46:30.726471.
+[2026-01-18 19:20:20,579] Train loss 3.3787 at step 136000 with lr 0.00069. [Avg: 3.2970]  Perf: 0.0234s per step (43820t/s). Estimated Total Train: 5:50:31.266975.
+[2026-01-18 19:20:43,927] Train loss 3.4787 at step 137000 with lr 0.00069. [Avg: 3.2456]  Perf: 0.0233s per step (43861t/s). Estimated Total Train: 5:50:12.050128.
+[2026-01-18 19:21:07,038] Train loss 2.9494 at step 138000 with lr 0.00070. [Avg: 3.2656]  Perf: 0.0231s per step (44312t/s). Estimated Total Train: 5:46:38.105550.
+[2026-01-18 19:21:30,167] Train loss 3.1486 at step 139000 with lr 0.00070. [Avg: 3.2995]  Perf: 0.0231s per step (44278t/s). Estimated Total Train: 5:46:53.843679.
+[2026-01-18 19:21:53,274] Train loss 3.7342 at step 140000 with lr 0.00070. [Avg: 3.2412]  Perf: 0.0231s per step (44320t/s). Estimated Total Train: 5:46:34.419765.
+[2026-01-18 19:22:16,377] Train loss 2.7888 at step 141000 with lr 0.00071. [Avg: 3.2453]  Perf: 0.0231s per step (44326t/s). Estimated Total Train: 5:46:31.493154.
+[2026-01-18 19:22:39,481] Train loss 3.4363 at step 142000 with lr 0.00071. [Avg: 3.2800]  Perf: 0.0231s per step (44324t/s). Estimated Total Train: 5:46:32.267776.
+[2026-01-18 19:23:02,622] Train loss 2.4489 at step 143000 with lr 0.00071. [Avg: 3.2275]  Perf: 0.0231s per step (44255t/s). Estimated Total Train: 5:47:04.572301.
+[2026-01-18 19:23:25,788] Train loss 2.9926 at step 144000 with lr 0.00072. [Avg: 3.2201]  Perf: 0.0232s per step (44206t/s). Estimated Total Train: 5:47:27.664189.
+[2026-01-18 19:23:49,309] Train loss 3.3873 at step 145000 with lr 0.00072. [Avg: 3.2185]  Perf: 0.0235s per step (43538t/s). Estimated Total Train: 5:52:47.537141.
+[2026-01-18 19:24:12,805] Train loss 4.2513 at step 146000 with lr 0.00072. [Avg: 3.2160]  Perf: 0.0235s per step (43585t/s). Estimated Total Train: 5:52:24.730854.
+[2026-01-18 19:24:36,339] Train loss 2.9048 at step 147000 with lr 0.00073. [Avg: 3.2678]  Perf: 0.0235s per step (43515t/s). Estimated Total Train: 5:52:58.716588.
+[2026-01-18 19:24:59,847] Train loss 2.9804 at step 148000 with lr 0.00073. [Avg: 3.2247]  Perf: 0.0235s per step (43563t/s). Estimated Total Train: 5:52:35.435443.
+[2026-01-18 19:25:23,366] Train loss 3.4557 at step 149000 with lr 0.00073. [Avg: 3.2222]  Perf: 0.0235s per step (43543t/s). Estimated Total Train: 5:52:45.124011.
+[2026-01-18 19:25:46,883] Train loss 3.0930 at step 150000 with lr 0.00074. [Avg: 3.2010]  Perf: 0.0235s per step (43547t/s). Estimated Total Train: 5:52:43.373494.
+[2026-01-18 19:26:10,418] Train loss 3.0330 at step 151000 with lr 0.00074. [Avg: 3.2240]  Perf: 0.0235s per step (43513t/s). Estimated Total Train: 5:52:59.653645.
+[2026-01-18 19:26:33,874] Train loss 2.5109 at step 152000 with lr 0.00074. [Avg: 3.1731]  Perf: 0.0235s per step (43660t/s). Estimated Total Train: 5:51:48.602571.
+[2026-01-18 19:26:57,017] Train loss 3.7842 at step 153000 with lr 0.00075. [Avg: 3.2138]  Perf: 0.0231s per step (44251t/s). Estimated Total Train: 5:47:06.724935.
+[2026-01-18 19:27:20,109] Train loss 2.6652 at step 154000 with lr 0.00075. [Avg: 3.2239]  Perf: 0.0231s per step (44347t/s). Estimated Total Train: 5:46:21.650949.
+[2026-01-18 19:27:43,215] Train loss 3.3335 at step 155000 with lr 0.00075. [Avg: 3.1715]  Perf: 0.0231s per step (44322t/s). Estimated Total Train: 5:46:33.304396.
+[2026-01-18 19:28:06,322] Train loss 3.3282 at step 156000 with lr 0.00076. [Avg: 3.1504]  Perf: 0.0231s per step (44320t/s). Estimated Total Train: 5:46:34.430280.
+[2026-01-18 19:28:29,462] Train loss 2.8886 at step 157000 with lr 0.00076. [Avg: 3.1758]  Perf: 0.0231s per step (44257t/s). Estimated Total Train: 5:47:03.969555.
+[2026-01-18 19:28:52,595] Train loss 3.5789 at step 158000 with lr 0.00076. [Avg: 3.2016]  Perf: 0.0231s per step (44269t/s). Estimated Total Train: 5:46:58.413305.
+[2026-01-18 19:29:15,718] Train loss 3.3569 at step 159000 with lr 0.00077. [Avg: 3.2194]  Perf: 0.0231s per step (44288t/s). Estimated Total Train: 5:46:49.368467.
+[2026-01-18 19:29:38,761] Train loss 3.0286 at step 160000 with lr 0.00077. [Avg: 3.1924]  Perf: 0.0230s per step (44444t/s). Estimated Total Train: 5:45:36.308956.
+[2026-01-18 19:30:02,157] Train loss 3.6767 at step 161000 with lr 0.00077. [Avg: 3.1875]  Perf: 0.0234s per step (43772t/s). Estimated Total Train: 5:50:54.669356.
+[2026-01-18 19:30:25,581] Train loss 3.3380 at step 162000 with lr 0.00078. [Avg: 3.1877]  Perf: 0.0234s per step (43720t/s). Estimated Total Train: 5:51:19.785132.
+[2026-01-18 19:30:48,691] Train loss 3.1037 at step 163000 with lr 0.00078. [Avg: 3.1323]  Perf: 0.0231s per step (44315t/s). Estimated Total Train: 5:46:36.548581.
+[2026-01-18 19:31:11,882] Train loss 3.3006 at step 164000 with lr 0.00078. [Avg: 3.1201]  Perf: 0.0232s per step (44158t/s). Estimated Total Train: 5:47:50.612955.
+[2026-01-18 19:31:35,027] Train loss 3.1482 at step 165000 with lr 0.00078. [Avg: 3.2256]  Perf: 0.0231s per step (44247t/s). Estimated Total Train: 5:47:08.406143.
+[2026-01-18 19:31:58,144] Train loss 3.0481 at step 166000 with lr 0.00079. [Avg: 3.2054]  Perf: 0.0231s per step (44300t/s). Estimated Total Train: 5:46:43.536701.
+[2026-01-18 19:32:21,222] Train loss 3.0657 at step 167000 with lr 0.00079. [Avg: 3.2036]  Perf: 0.0231s per step (44375t/s). Estimated Total Train: 5:46:08.307495.
+[2026-01-18 19:32:44,310] Train loss 3.1649 at step 168000 with lr 0.00079. [Avg: 3.1807]  Perf: 0.0231s per step (44354t/s). Estimated Total Train: 5:46:18.145623.
+[2026-01-18 19:33:07,403] Train loss 4.0672 at step 169000 with lr 0.00080. [Avg: 3.2027]  Perf: 0.0231s per step (44348t/s). Estimated Total Train: 5:46:21.207633.
+[2026-01-18 19:33:30,674] Train loss 3.3782 at step 170000 with lr 0.00080. [Avg: 3.1815]  Perf: 0.0233s per step (44006t/s). Estimated Total Train: 5:49:02.522764.
+[2026-01-18 19:33:53,791] Train loss 2.9056 at step 171000 with lr 0.00080. [Avg: 3.2037]  Perf: 0.0231s per step (44300t/s). Estimated Total Train: 5:46:43.746986.
+[2026-01-18 19:34:16,909] Train loss 2.6135 at step 172000 with lr 0.00081. [Avg: 3.2547]  Perf: 0.0231s per step (44297t/s). Estimated Total Train: 5:46:44.981875.
+[2026-01-18 19:34:40,022] Train loss 3.3553 at step 173000 with lr 0.00081. [Avg: 3.2115]  Perf: 0.0231s per step (44308t/s). Estimated Total Train: 5:46:40.002837.
+[2026-01-18 19:35:03,157] Train loss 3.3340 at step 174000 with lr 0.00081. [Avg: 3.2042]  Perf: 0.0231s per step (44267t/s). Estimated Total Train: 5:46:59.246936.
+[2026-01-18 19:35:26,296] Train loss 3.4401 at step 175000 with lr 0.00082. [Avg: 3.1702]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.328400.
+[2026-01-18 19:35:49,407] Train loss 3.0160 at step 176000 with lr 0.00082. [Avg: 3.1536]  Perf: 0.0231s per step (44310t/s). Estimated Total Train: 5:46:38.801208.
+[2026-01-18 19:36:12,567] Train loss 3.5909 at step 177000 with lr 0.00082. [Avg: 3.1877]  Perf: 0.0232s per step (44218t/s). Estimated Total Train: 5:47:22.038846.
+[2026-01-18 19:36:35,732] Train loss 3.3044 at step 178000 with lr 0.00083. [Avg: 3.2252]  Perf: 0.0232s per step (44209t/s). Estimated Total Train: 5:47:26.443248.
+[2026-01-18 19:36:58,888] Train loss 3.7261 at step 179000 with lr 0.00083. [Avg: 3.1664]  Perf: 0.0232s per step (44225t/s). Estimated Total Train: 5:47:18.900018.
+[2026-01-18 19:37:22,013] Train loss 2.6037 at step 180000 with lr 0.00083. [Avg: 3.1536]  Perf: 0.0231s per step (44284t/s). Estimated Total Train: 5:46:51.255026.
+[2026-01-18 19:37:45,137] Train loss 2.8882 at step 181000 with lr 0.00084. [Avg: 3.1466]  Perf: 0.0231s per step (44288t/s). Estimated Total Train: 5:46:49.261179.
+[2026-01-18 19:38:08,252] Train loss 3.0025 at step 182000 with lr 0.00084. [Avg: 3.1484]  Perf: 0.0231s per step (44303t/s). Estimated Total Train: 5:46:42.109122.
+[2026-01-18 19:38:31,397] Train loss 3.6509 at step 183000 with lr 0.00084. [Avg: 3.1234]  Perf: 0.0231s per step (44246t/s). Estimated Total Train: 5:47:08.793883.
+[2026-01-18 19:38:54,553] Train loss 3.6128 at step 184000 with lr 0.00085. [Avg: 3.1540]  Perf: 0.0232s per step (44226t/s). Estimated Total Train: 5:47:18.553262.
+[2026-01-18 19:39:17,705] Train loss 2.9163 at step 185000 with lr 0.00085. [Avg: 3.1018]  Perf: 0.0231s per step (44234t/s). Estimated Total Train: 5:47:14.538102.
+[2026-01-18 19:39:40,809] Train loss 3.3676 at step 186000 with lr 0.00085. [Avg: 3.1392]  Perf: 0.0231s per step (44324t/s). Estimated Total Train: 5:46:32.288160.
+[2026-01-18 19:40:03,922] Train loss 2.3115 at step 187000 with lr 0.00086. [Avg: 3.0905]  Perf: 0.0231s per step (44308t/s). Estimated Total Train: 5:46:39.877739.
+[2026-01-18 19:40:27,049] Train loss 2.3335 at step 188000 with lr 0.00086. [Avg: 3.1006]  Perf: 0.0231s per step (44281t/s). Estimated Total Train: 5:46:52.458372.
+[2026-01-18 19:40:50,164] Train loss 4.0792 at step 189000 with lr 0.00086. [Avg: 3.1444]  Perf: 0.0231s per step (44304t/s). Estimated Total Train: 5:46:41.723099.
+[2026-01-18 19:41:13,274] Train loss 3.3687 at step 190000 with lr 0.00087. [Avg: 3.1195]  Perf: 0.0231s per step (44314t/s). Estimated Total Train: 5:46:37.224069.
+[2026-01-18 19:41:36,383] Train loss 4.1406 at step 191000 with lr 0.00087. [Avg: 3.0557]  Perf: 0.0231s per step (44316t/s). Estimated Total Train: 5:46:35.907426.
+[2026-01-18 19:41:59,498] Train loss 3.4978 at step 192000 with lr 0.00087. [Avg: 3.0635]  Perf: 0.0231s per step (44305t/s). Estimated Total Train: 5:46:41.463461.
+[2026-01-18 19:42:22,602] Train loss 3.7136 at step 193000 with lr 0.00087. [Avg: 3.1217]  Perf: 0.0231s per step (44325t/s). Estimated Total Train: 5:46:31.907716.
+[2026-01-18 19:42:45,707] Train loss 2.8920 at step 194000 with lr 0.00088. [Avg: 3.0915]  Perf: 0.0231s per step (44323t/s). Estimated Total Train: 5:46:32.844343.
+[2026-01-18 19:43:08,805] Train loss 3.0595 at step 195000 with lr 0.00088. [Avg: 3.0817]  Perf: 0.0231s per step (44337t/s). Estimated Total Train: 5:46:26.398458.
+[2026-01-18 19:43:32,051] Train loss 3.3928 at step 196000 with lr 0.00088. [Avg: 3.0971]  Perf: 0.0232s per step (44055t/s). Estimated Total Train: 5:48:39.225097.
+[2026-01-18 19:43:55,193] Train loss 3.4541 at step 197000 with lr 0.00089. [Avg: 3.0299]  Perf: 0.0231s per step (44252t/s). Estimated Total Train: 5:47:06.192784.
+[2026-01-18 19:44:18,344] Train loss 3.2719 at step 198000 with lr 0.00089. [Avg: 3.0605]  Perf: 0.0231s per step (44236t/s). Estimated Total Train: 5:47:13.796096.
+[2026-01-18 19:44:41,495] Train loss 3.1501 at step 199000 with lr 0.00089. [Avg: 3.0273]  Perf: 0.0231s per step (44234t/s). Estimated Total Train: 5:47:14.437037.
+[2026-01-18 19:45:04,639] Train loss 3.1642 at step 200000 with lr 0.00090. [Avg: 3.0685]  Perf: 0.0231s per step (44249t/s). Estimated Total Train: 5:47:07.696753.
+[2026-01-18 19:45:27,772] Train loss 2.9146 at step 201000 with lr 0.00090. [Avg: 3.0263]  Perf: 0.0231s per step (44270t/s). Estimated Total Train: 5:46:57.680526.
+[2026-01-18 19:45:50,876] Train loss 2.6215 at step 202000 with lr 0.00090. [Avg: 3.0489]  Perf: 0.0231s per step (44326t/s). Estimated Total Train: 5:46:31.601729.
+[2026-01-18 19:46:13,996] Train loss 3.4046 at step 203000 with lr 0.00091. [Avg: 3.0520]  Perf: 0.0231s per step (44293t/s). Estimated Total Train: 5:46:47.073140.
+[2026-01-18 19:46:37,117] Train loss 2.7415 at step 204000 with lr 0.00091. [Avg: 3.0254]  Perf: 0.0231s per step (44292t/s). Estimated Total Train: 5:46:47.370329.
+[2026-01-18 19:47:00,239] Train loss 2.9218 at step 205000 with lr 0.00091. [Avg: 3.0566]  Perf: 0.0231s per step (44292t/s). Estimated Total Train: 5:46:47.266045.
+[2026-01-18 19:47:23,336] Train loss 2.4691 at step 206000 with lr 0.00092. [Avg: 3.0404]  Perf: 0.0231s per step (44338t/s). Estimated Total Train: 5:46:25.869741.
+[2026-01-18 19:47:46,435] Train loss 2.8603 at step 207000 with lr 0.00092. [Avg: 3.0863]  Perf: 0.0231s per step (44334t/s). Estimated Total Train: 5:46:27.506104.
+[2026-01-18 19:48:09,552] Train loss 2.8349 at step 208000 with lr 0.00092. [Avg: 3.0912]  Perf: 0.0231s per step (44300t/s). Estimated Total Train: 5:46:43.720808.
+[2026-01-18 19:48:32,685] Train loss 3.4896 at step 209000 with lr 0.00093. [Avg: 3.0979]  Perf: 0.0231s per step (44269t/s). Estimated Total Train: 5:46:58.259239.
+[2026-01-18 19:48:55,812] Train loss 2.6979 at step 210000 with lr 0.00093. [Avg: 3.0903]  Perf: 0.0231s per step (44283t/s). Estimated Total Train: 5:46:51.589980.
+[2026-01-18 19:49:18,944] Train loss 2.9784 at step 211000 with lr 0.00093. [Avg: 3.0092]  Perf: 0.0231s per step (44273t/s). Estimated Total Train: 5:46:56.262817.
+[2026-01-18 19:49:42,068] Train loss 3.5533 at step 212000 with lr 0.00094. [Avg: 3.0382]  Perf: 0.0231s per step (44286t/s). Estimated Total Train: 5:46:50.093522.
+[2026-01-18 19:50:05,200] Train loss 2.9582 at step 213000 with lr 0.00094. [Avg: 3.0519]  Perf: 0.0231s per step (44271t/s). Estimated Total Train: 5:46:57.301798.
+[2026-01-18 19:50:28,322] Train loss 3.3289 at step 214000 with lr 0.00094. [Avg: 3.0246]  Perf: 0.0231s per step (44292t/s). Estimated Total Train: 5:46:47.419038.
+[2026-01-18 19:50:51,515] Train loss 4.0187 at step 215000 with lr 0.00095. [Avg: 3.1957]  Perf: 0.0232s per step (44155t/s). Estimated Total Train: 5:47:51.950841.
+[2026-01-18 19:51:14,542] Train loss 3.0820 at step 216000 with lr 0.00095. [Avg: 3.1918]  Perf: 0.0230s per step (44473t/s). Estimated Total Train: 5:45:22.695565.
+[2026-01-18 19:51:37,823] Train loss 3.5034 at step 217000 with lr 0.00095. [Avg: 3.1704]  Perf: 0.0233s per step (43988t/s). Estimated Total Train: 5:49:11.156688.
+[2026-01-18 19:52:01,326] Train loss 2.6895 at step 218000 with lr 0.00096. [Avg: 3.1841]  Perf: 0.0235s per step (43574t/s). Estimated Total Train: 5:52:30.065875.
+[2026-01-18 19:52:24,824] Train loss 2.9384 at step 219000 with lr 0.00096. [Avg: 3.1602]  Perf: 0.0235s per step (43582t/s). Estimated Total Train: 5:52:26.578145.
+[2026-01-18 19:52:48,291] Train loss 3.3203 at step 220000 with lr 0.00096. [Avg: 3.1303]  Perf: 0.0235s per step (43639t/s). Estimated Total Train: 5:51:58.775439.
+[2026-01-18 19:53:11,780] Train loss 2.5448 at step 221000 with lr 0.00096. [Avg: 3.1159]  Perf: 0.0235s per step (43598t/s). Estimated Total Train: 5:52:18.473582.
+[2026-01-18 19:53:35,278] Train loss 2.7140 at step 222000 with lr 0.00097. [Avg: 3.1166]  Perf: 0.0235s per step (43583t/s). Estimated Total Train: 5:52:26.047068.
+[2026-01-18 19:53:58,767] Train loss 3.6895 at step 223000 with lr 0.00097. [Avg: 3.1296]  Perf: 0.0235s per step (43598t/s). Estimated Total Train: 5:52:18.752532.
+[2026-01-18 19:54:22,259] Train loss 3.2029 at step 224000 with lr 0.00097. [Avg: 3.1158]  Perf: 0.0235s per step (43594t/s). Estimated Total Train: 5:52:20.497899.
+[2026-01-18 19:54:45,755] Train loss 3.2021 at step 225000 with lr 0.00098. [Avg: 3.1150]  Perf: 0.0235s per step (43585t/s). Estimated Total Train: 5:52:24.918394.
+[2026-01-18 19:55:08,859] Train loss 3.5539 at step 226000 with lr 0.00098. [Avg: 3.1314]  Perf: 0.0231s per step (44326t/s). Estimated Total Train: 5:46:31.451526.
+[2026-01-18 19:55:31,974] Train loss 3.0584 at step 227000 with lr 0.00098. [Avg: 3.1409]  Perf: 0.0231s per step (44304t/s). Estimated Total Train: 5:46:41.663232.
+[2026-01-18 19:55:55,081] Train loss 2.9473 at step 228000 with lr 0.00099. [Avg: 3.1104]  Perf: 0.0231s per step (44318t/s). Estimated Total Train: 5:46:34.998264.
+[2026-01-18 19:56:18,190] Train loss 3.1056 at step 229000 with lr 0.00099. [Avg: 3.1259]  Perf: 0.0231s per step (44316t/s). Estimated Total Train: 5:46:35.901632.
+[2026-01-18 19:56:41,337] Train loss 3.3305 at step 230000 with lr 0.00099. [Avg: 3.1286]  Perf: 0.0231s per step (44244t/s). Estimated Total Train: 5:47:10.174685.
+[2026-01-18 19:57:04,454] Train loss 3.2726 at step 231000 with lr 0.00100. [Avg: 3.1557]  Perf: 0.0231s per step (44301t/s). Estimated Total Train: 5:46:43.289080.
+[2026-01-18 19:57:27,550] Train loss 2.9522 at step 232000 with lr 0.00100. [Avg: 3.1168]  Perf: 0.0231s per step (44339t/s). Estimated Total Train: 5:46:25.256267.
+[2026-01-18 19:57:50,655] Train loss 3.1408 at step 233000 with lr 0.00099. [Avg: 3.1197]  Perf: 0.0231s per step (44325t/s). Estimated Total Train: 5:46:32.057061.
+[2026-01-18 19:58:13,759] Train loss 3.7416 at step 234000 with lr 0.00097. [Avg: 3.1268]  Perf: 0.0231s per step (44324t/s). Estimated Total Train: 5:46:32.451882.
+[2026-01-18 19:58:36,874] Train loss 2.6549 at step 235000 with lr 0.00096. [Avg: 3.1143]  Perf: 0.0231s per step (44305t/s). Estimated Total Train: 5:46:41.336861.
+[2026-01-18 19:59:00,001] Train loss 2.7035 at step 236000 with lr 0.00095. [Avg: 3.1157]  Perf: 0.0231s per step (44281t/s). Estimated Total Train: 5:46:52.655139.
+[2026-01-18 19:59:23,165] Train loss 3.7431 at step 237000 with lr 0.00093. [Avg: 3.0815]  Perf: 0.0232s per step (44211t/s). Estimated Total Train: 5:47:25.438600.
+[2026-01-18 19:59:46,317] Train loss 3.6382 at step 238000 with lr 0.00092. [Avg: 3.0631]  Perf: 0.0232s per step (44232t/s). Estimated Total Train: 5:47:15.660553.
+[2026-01-18 20:00:09,426] Train loss 3.7399 at step 239000 with lr 0.00091. [Avg: 3.0534]  Perf: 0.0231s per step (44316t/s). Estimated Total Train: 5:46:36.071792.
+[2026-01-18 20:00:32,532] Train loss 3.3821 at step 240000 with lr 0.00090. [Avg: 3.0431]  Perf: 0.0231s per step (44321t/s). Estimated Total Train: 5:46:33.599868.
+[2026-01-18 20:00:55,686] Train loss 2.9164 at step 241000 with lr 0.00088. [Avg: 3.0145]  Perf: 0.0232s per step (44228t/s). Estimated Total Train: 5:47:17.502909.
+[2026-01-18 20:01:21,422] Train loss 3.7394 at step 242000 with lr 0.00087. [Avg: 3.0391]  Perf: 0.0257s per step (39792t/s). Estimated Total Train: 6:26:00.308790.
+[2026-01-18 20:01:44,570] Train loss 3.2319 at step 243000 with lr 0.00086. [Avg: 3.0624]  Perf: 0.0231s per step (44242t/s). Estimated Total Train: 5:47:10.938148.
+[2026-01-18 20:02:07,696] Train loss 2.7032 at step 244000 with lr 0.00084. [Avg: 3.0499]  Perf: 0.0231s per step (44282t/s). Estimated Total Train: 5:46:52.016344.
+[2026-01-18 20:02:30,805] Train loss 2.7541 at step 245000 with lr 0.00083. [Avg: 3.0433]  Perf: 0.0231s per step (44317t/s). Estimated Total Train: 5:46:35.850563.
+[2026-01-18 20:02:53,917] Train loss 3.2279 at step 246000 with lr 0.00082. [Avg: 3.0344]  Perf: 0.0231s per step (44309t/s). Estimated Total Train: 5:46:39.292374.
+[2026-01-18 20:03:17,029] Train loss 3.4070 at step 247000 with lr 0.00080. [Avg: 3.0212]  Perf: 0.0231s per step (44311t/s). Estimated Total Train: 5:46:38.469901.
+[2026-01-18 20:03:40,138] Train loss 2.3795 at step 248000 with lr 0.00079. [Avg: 3.0297]  Perf: 0.0231s per step (44315t/s). Estimated Total Train: 5:46:36.380568.
+[2026-01-18 20:04:03,293] Train loss 2.9269 at step 249000 with lr 0.00078. [Avg: 3.0248]  Perf: 0.0232s per step (44228t/s). Estimated Total Train: 5:47:17.408066.
+[2026-01-18 20:04:26,789] Train loss 3.4223 at step 250000 with lr 0.00077. [Avg: 2.9958]  Perf: 0.0235s per step (43586t/s). Estimated Total Train: 5:52:24.561553.
+[2026-01-18 20:04:50,287] Train loss 3.4769 at step 251000 with lr 0.00075. [Avg: 3.0214]  Perf: 0.0235s per step (43582t/s). Estimated Total Train: 5:52:26.340394.
+[2026-01-18 20:05:13,439] Train loss 3.2603 at step 252000 with lr 0.00074. [Avg: 3.0109]  Perf: 0.0232s per step (44233t/s). Estimated Total Train: 5:47:15.198784.
+[2026-01-18 20:05:36,572] Train loss 2.8290 at step 253000 with lr 0.00073. [Avg: 3.0208]  Perf: 0.0231s per step (44268t/s). Estimated Total Train: 5:46:58.419528.
+[2026-01-18 20:05:59,713] Train loss 3.0010 at step 254000 with lr 0.00071. [Avg: 2.9796]  Perf: 0.0231s per step (44255t/s). Estimated Total Train: 5:47:04.606848.
+[2026-01-18 20:06:22,867] Train loss 2.5996 at step 255000 with lr 0.00070. [Avg: 2.9748]  Perf: 0.0232s per step (44229t/s). Estimated Total Train: 5:47:17.140059.
+[2026-01-18 20:06:46,007] Train loss 2.5275 at step 256000 with lr 0.00069. [Avg: 2.9761]  Perf: 0.0231s per step (44257t/s). Estimated Total Train: 5:47:04.029422.
+[2026-01-18 20:07:09,135] Train loss 2.9736 at step 257000 with lr 0.00068. [Avg: 2.9417]  Perf: 0.0231s per step (44279t/s). Estimated Total Train: 5:46:53.579106.
+[2026-01-18 20:07:32,274] Train loss 3.1433 at step 258000 with lr 0.00066. [Avg: 2.9843]  Perf: 0.0231s per step (44258t/s). Estimated Total Train: 5:47:03.379469.
+[2026-01-18 20:07:55,424] Train loss 2.9803 at step 259000 with lr 0.00065. [Avg: 2.9736]  Perf: 0.0231s per step (44238t/s). Estimated Total Train: 5:47:12.934141.
+[2026-01-18 20:08:18,588] Train loss 3.2410 at step 260000 with lr 0.00064. [Avg: 2.9060]  Perf: 0.0232s per step (44211t/s). Estimated Total Train: 5:47:25.703602.
+[2026-01-18 20:08:41,760] Train loss 2.2371 at step 261000 with lr 0.00062. [Avg: 2.9380]  Perf: 0.0232s per step (44195t/s). Estimated Total Train: 5:47:33.219366.
+[2026-01-18 20:09:04,908] Train loss 3.1905 at step 262000 with lr 0.00061. [Avg: 2.9256]  Perf: 0.0231s per step (44240t/s). Estimated Total Train: 5:47:12.022405.
+[2026-01-18 20:09:28,009] Train loss 2.6427 at step 263000 with lr 0.00060. [Avg: 2.9370]  Perf: 0.0231s per step (44331t/s). Estimated Total Train: 5:46:29.151692.
+[2026-01-18 20:09:51,130] Train loss 2.3226 at step 264000 with lr 0.00059. [Avg: 2.8968]  Perf: 0.0231s per step (44293t/s). Estimated Total Train: 5:46:46.849980.
+[2026-01-18 20:10:14,328] Train loss 3.0621 at step 265000 with lr 0.00057. [Avg: 2.9063]  Perf: 0.0232s per step (44144t/s). Estimated Total Train: 5:47:57.059054.
+[2026-01-18 20:10:37,482] Train loss 2.7583 at step 266000 with lr 0.00056. [Avg: 2.8960]  Perf: 0.0232s per step (44229t/s). Estimated Total Train: 5:47:16.872697.
+[2026-01-18 20:11:00,636] Train loss 4.0143 at step 267000 with lr 0.00055. [Avg: 2.9313]  Perf: 0.0232s per step (44229t/s). Estimated Total Train: 5:47:16.931062.
+[2026-01-18 20:11:23,796] Train loss 2.1735 at step 268000 with lr 0.00053. [Avg: 2.9417]  Perf: 0.0232s per step (44218t/s). Estimated Total Train: 5:47:22.362213.
+[2026-01-18 20:11:46,962] Train loss 2.7881 at step 269000 with lr 0.00052. [Avg: 2.8880]  Perf: 0.0232s per step (44207t/s). Estimated Total Train: 5:47:27.448325.
+[2026-01-18 20:12:10,120] Train loss 2.6362 at step 270000 with lr 0.00051. [Avg: 2.9516]  Perf: 0.0232s per step (44221t/s). Estimated Total Train: 5:47:20.603757.
+[2026-01-18 20:12:33,247] Train loss 3.0039 at step 271000 with lr 0.00050. [Avg: 2.9238]  Perf: 0.0231s per step (44281t/s). Estimated Total Train: 5:46:52.730241.
+[2026-01-18 20:12:56,384] Train loss 2.5779 at step 272000 with lr 0.00048. [Avg: 2.8941]  Perf: 0.0231s per step (44261t/s). Estimated Total Train: 5:47:01.730232.
+[2026-01-18 20:13:19,550] Train loss 2.3909 at step 273000 with lr 0.00047. [Avg: 2.8728]  Perf: 0.0232s per step (44206t/s). Estimated Total Train: 5:47:27.655606.
+[2026-01-18 20:13:42,612] Train loss 3.2949 at step 274000 with lr 0.00046. [Avg: 2.8839]  Perf: 0.0231s per step (44408t/s). Estimated Total Train: 5:45:53.190136.
+[2026-01-18 20:14:05,614] Train loss 2.9224 at step 275000 with lr 0.00044. [Avg: 2.8665]  Perf: 0.0230s per step (44520t/s). Estimated Total Train: 5:45:00.597167.
+[2026-01-18 20:14:28,611] Train loss 3.0379 at step 276000 with lr 0.00043. [Avg: 2.8907]  Perf: 0.0230s per step (44532t/s). Estimated Total Train: 5:44:55.078468.
+[2026-01-18 20:14:51,599] Train loss 2.8162 at step 277000 with lr 0.00042. [Avg: 2.8646]  Perf: 0.0230s per step (44548t/s). Estimated Total Train: 5:44:48.028765.
+[2026-01-18 20:15:14,596] Train loss 2.7407 at step 278000 with lr 0.00041. [Avg: 2.8914]  Perf: 0.0230s per step (44531t/s). Estimated Total Train: 5:44:55.540023.
+[2026-01-18 20:15:37,588] Train loss 2.9427 at step 279000 with lr 0.00039. [Avg: 2.8491]  Perf: 0.0230s per step (44540t/s). Estimated Total Train: 5:44:51.704464.
+[2026-01-18 20:16:00,572] Train loss 2.4924 at step 280000 with lr 0.00038. [Avg: 2.8421]  Perf: 0.0230s per step (44557t/s). Estimated Total Train: 5:44:43.568144.
+[2026-01-18 20:16:23,560] Train loss 3.1024 at step 281000 with lr 0.00037. [Avg: 2.9627]  Perf: 0.0230s per step (44550t/s). Estimated Total Train: 5:44:46.709547.
+[2026-01-18 20:16:46,804] Train loss 3.2988 at step 282000 with lr 0.00035. [Avg: 3.0687]  Perf: 0.0232s per step (44059t/s). Estimated Total Train: 5:48:37.627573.
+[2026-01-18 20:17:09,978] Train loss 2.5289 at step 283000 with lr 0.00034. [Avg: 3.0176]  Perf: 0.0232s per step (44192t/s). Estimated Total Train: 5:47:34.257274.
+[2026-01-18 20:17:33,015] Train loss 3.3493 at step 284000 with lr 0.00033. [Avg: 2.9918]  Perf: 0.0230s per step (44453t/s). Estimated Total Train: 5:45:32.126212.
+[2026-01-18 20:17:56,055] Train loss 3.8555 at step 285000 with lr 0.00032. [Avg: 3.0198]  Perf: 0.0230s per step (44448t/s). Estimated Total Train: 5:45:34.150958.
+[2026-01-18 20:18:19,045] Train loss 2.6417 at step 286000 with lr 0.00030. [Avg: 2.9812]  Perf: 0.0230s per step (44544t/s). Estimated Total Train: 5:44:49.464712.
+[2026-01-18 20:18:42,044] Train loss 2.6292 at step 287000 with lr 0.00029. [Avg: 3.0079]  Perf: 0.0230s per step (44529t/s). Estimated Total Train: 5:44:56.854949.
+[2026-01-18 20:19:05,052] Train loss 2.9174 at step 288000 with lr 0.00028. [Avg: 2.9715]  Perf: 0.0230s per step (44511t/s). Estimated Total Train: 5:45:05.045128.
+[2026-01-18 20:19:28,047] Train loss 2.9759 at step 289000 with lr 0.00026. [Avg: 2.9897]  Perf: 0.0230s per step (44535t/s). Estimated Total Train: 5:44:53.905592.
+[2026-01-18 20:19:51,044] Train loss 2.5560 at step 290000 with lr 0.00025. [Avg: 2.9905]  Perf: 0.0230s per step (44533t/s). Estimated Total Train: 5:44:54.869041.
+[2026-01-18 20:20:14,044] Train loss 2.9084 at step 291000 with lr 0.00024. [Avg: 2.9517]  Perf: 0.0230s per step (44526t/s). Estimated Total Train: 5:44:58.162580.
+[2026-01-18 20:20:37,048] Train loss 2.9010 at step 292000 with lr 0.00023. [Avg: 2.9754]  Perf: 0.0230s per step (44518t/s). Estimated Total Train: 5:45:01.671767.
+[2026-01-18 20:21:00,052] Train loss 2.9452 at step 293000 with lr 0.00021. [Avg: 2.9837]  Perf: 0.0230s per step (44516t/s). Estimated Total Train: 5:45:02.656031.
+[2026-01-18 20:21:23,058] Train loss 2.9719 at step 294000 with lr 0.00020. [Avg: 2.9478]  Perf: 0.0230s per step (44514t/s). Estimated Total Train: 5:45:03.767753.
+[2026-01-18 20:21:46,122] Train loss 2.8791 at step 295000 with lr 0.00019. [Avg: 2.9670]  Perf: 0.0231s per step (44403t/s). Estimated Total Train: 5:45:55.481601.
+[2026-01-18 20:22:09,280] Train loss 2.9678 at step 296000 with lr 0.00018. [Avg: 2.9513]  Perf: 0.0232s per step (44222t/s). Estimated Total Train: 5:47:20.326524.
+[2026-01-18 20:22:32,440] Train loss 2.6713 at step 297000 with lr 0.00016. [Avg: 2.9170]  Perf: 0.0232s per step (44218t/s). Estimated Total Train: 5:47:22.037773.
+[2026-01-18 20:22:55,593] Train loss 2.7646 at step 298000 with lr 0.00015. [Avg: 2.9390]  Perf: 0.0231s per step (44233t/s). Estimated Total Train: 5:47:14.908247.
+[2026-01-18 20:23:18,711] Train loss 2.6865 at step 299000 with lr 0.00014. [Avg: 2.9560]  Perf: 0.0231s per step (44297t/s). Estimated Total Train: 5:46:44.978442.
+[2026-01-18 20:23:41,838] Train loss 2.5668 at step 300000 with lr 0.00012. [Avg: 2.9305]  Perf: 0.0231s per step (44282t/s). Estimated Total Train: 5:46:52.161613.
+[2026-01-18 20:24:04,952] Train loss 2.9916 at step 301000 with lr 0.00011. [Avg: 2.9712]  Perf: 0.0231s per step (44306t/s). Estimated Total Train: 5:46:41.027870.
+[2026-01-18 20:24:28,062] Train loss 2.8426 at step 302000 with lr 0.00010. [Avg: 2.9530]  Perf: 0.0231s per step (44314t/s). Estimated Total Train: 5:46:36.871090.
+[2026-01-18 20:24:51,227] Train loss 2.2331 at step 303000 with lr 0.00009. [Avg: 2.9678]  Perf: 0.0232s per step (44208t/s). Estimated Total Train: 5:47:26.956515.
+[2026-01-18 20:25:14,519] Train loss 3.3482 at step 304000 with lr 0.00007. [Avg: 2.9515]  Perf: 0.0233s per step (43967t/s). Estimated Total Train: 5:49:21.232996.
+[2026-01-18 20:25:37,691] Train loss 3.0822 at step 305000 with lr 0.00006. [Avg: 2.9479]  Perf: 0.0232s per step (44194t/s). Estimated Total Train: 5:47:33.537369.
+[2026-01-18 20:26:00,823] Train loss 3.2860 at step 306000 with lr 0.00005. [Avg: 2.9695]  Perf: 0.0231s per step (44273t/s). Estimated Total Train: 5:46:56.183639.
+[2026-01-18 20:26:23,946] Train loss 2.7321 at step 307000 with lr 0.00003. [Avg: 2.9739]  Perf: 0.0231s per step (44289t/s). Estimated Total Train: 5:46:49.008408.
+[2026-01-18 20:26:47,076] Train loss 2.3251 at step 308000 with lr 0.00002. [Avg: 2.9177]  Perf: 0.0231s per step (44274t/s). Estimated Total Train: 5:46:55.622306.
+[2026-01-18 20:27:10,193] Train loss 2.8259 at step 309000 with lr 0.00001. [Avg: 2.9475]  Perf: 0.0231s per step (44299t/s). Estimated Total Train: 5:46:43.970790.
+[2026-01-18 20:27:24,872] Reached deadline. Stopping training ...
+[2026-01-18 20:27:25,203] -------------------------------------------------------------
+[2026-01-18 20:27:25,204] Finished running job test2h with total train time: 2:00:07.815895
+[2026-01-18 20:27:25,206] Max. Mem allocated: 2.791 GB. Max. Mem reserved: 2.965 GB.
+[2026-01-18 20:27:25,206] 4.28e-01 kWh of electricity used for GPU(s) during job.
+[2026-01-18 20:27:25,206] -----------------Shutdown complete.--------------------------

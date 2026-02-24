@@ -1,0 +1,6 @@
+GPU 0: NVIDIA H100 (UUID: GPU-b94e697d-9e3f-25de-d1d1-48ae4feb6b58)
+  MIG 1g.12gb     Device  0: (UUID: MIG-5136bec0-ffa9-5e39-92cf-0e5bb970a0b0)
+[2026-01-18 17:54:18,194] GPU : NVIDIA H100 MIG 1g.12gb. CUDA: 12.1.
+[2026-01-18 17:54:18,213] Platform: linux, Python: 3.11.8, PyTorch: 2.2.1
+[2026-01-18 17:54:18,213] CPUs: 16, GPUs: 1 on ramses16330.
+[2026-01-18 17:54:18,213] Seeding with random seed 3696912485 on rank 0.
