@@ -1,0 +1,9 @@
+- name=final_smoke
+- arch=crammed-bert
+- train=bert-o4
+- data=pile-readymade
+- budget=0.2
+- impl.compile_torch=False
+- impl.fullgraph=false
+- impl.threads=16
+- impl.microbatch_size=8

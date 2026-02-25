@@ -1,0 +1,152 @@
+arch:
+  architectures:
+  - BertForMaskedLM
+  attention_probs_dropout_prob: 0.1
+  hidden_act: gelu
+  hidden_dropout_prob: 0.1
+  hidden_size: 768
+  initializer_range: 0.02
+  intermediate_size: 3072
+  layer_norm_eps: 1.0e-12
+  max_position_embeddings: 512
+  num_attention_heads: 12
+  num_hidden_layers: 12
+  pad_token_id: 0
+  position_embedding_type: absolute
+  type_vocab_size: 2
+  use_cache: true
+data:
+  sources:
+    ag_news:
+      provider: huggingface
+      split: train
+      streaming: false
+      remove_columns: label
+      concatenate_successive_entries: 0
+  name: sanity-check-2
+  normalizer:
+    force_lowercase: true
+    strip_accents: true
+    force_english_keyboard: true
+    whitespace_escape: false
+  tokenizer: BPE
+  vocab_size: 32768
+  seq_length: 128
+  include_cls_token_in_corpus: false
+  include_sep_token_in_corpus: false
+  use_type_ids: false
+  max_entries_in_raw_dataset: 10000000000.0
+  max_seq_in_tokenized_dataset: 10000000000.0
+  named_entity_simplification: false
+  remove_whitespaces: false
+  remove_trash: false
+  trash_cutoff: 0.3
+  deduplicate_entries: false
+  deduplication_threshold: 100
+  ordering: randomized
+impl:
+  path: data
+  local_staging_dir: null
+  forbid_dataset_preprocessing: false
+  temporary_corpus: false
+  max_raw_chunk_size: 8000000.0
+  print_loss_every_nth_step: 1000
+  save_intermediate_checkpoints: false
+  save_every_nth_step: 10000
+  resume_run_after_preempt: false
+  troubleshoot_strategy: none
+  early_termination:
+    enabled: false
+    budget: 3
+    loss_threshold: 6.0
+  microbatch_size: 2
+  threads: 8
+  benchmark: true
+  deterministic: false
+  non_blocking: true
+  tf32_allowed: true
+  matmul_precision: high
+  pad_to_multiple_of: 8
+  shuffle_in_dataloader: false
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true
+  default_precision: float
+  dist_backend: nccl
+  sharing_strategy: null
+  enable_huggingface_offline_mode: false
+  local_rank: null
+  push_to_huggingface_hub: false
+  hf_directoy_name: test-crammedBERT-c5
+  add_env_variables: null
+  name: torch-default
+  mixed_precision: true
+  grad_scaling: true
+  mixed_precision_target_dtype: float16
+  zero_redundancy_optimizer: false
+  broadcast_buffers: false
+  bucket_cap_mb: 25
+  gradient_as_bucket_view: true
+  static_graph: false
+  foreach_optimizer: false
+  compile_torch: false
+  mode: null
+  dynamic: false
+  fullgraph: false
+  backend: inductor
+  _inductor_vars:
+    max_autotune_gemm: true
+    max_autotune_pointwise: false
+    triton:
+      cudagraphs: true
+      cudagraph_trees: false
+    permute_fusion: true
+    shape_padding: true
+  enable_mem_efficient_sdp: true
+  enable_math_sdp: true
+  enable_flash_sdp: true
+wandb:
+  enabled: false
+  entity: null
+  project: null
+  tags: []
+train:
+  optim:
+    type: AdamW
+    lr: 0.0005
+    betas:
+    - 0.9
+    - 0.98
+    eps: 1.0e-12
+    weight_decay: 0.01
+    amsgrad: false
+    fused: null
+  optim_mod:
+    name: none
+  name: bert-base
+  limited_decay_keys:
+  - bias
+  - LayerNorm.bias
+  - LayerNorm.weight
+  - norm
+  warmup_steps: 30000
+  cooldown_steps: 0
+  steps: 900000
+  scheduler: budget-cosine-decay
+  batch_size: 1536
+  batch_size_ramp: 0
+  gradient_clipping: null
+  pretrain_in_train_mode: false
+  objective:
+    name: masked-lm
+    mlm_probability: 0.15
+    use_80_20_rule: true
+    disable_mlm: false
+    token_drop: 0.0
+  reverse_dataset_order: false
+  budget: ${budget}
+base_dir: outputs
+seed: null
+name: test
+budget: 24
+dryrun: true

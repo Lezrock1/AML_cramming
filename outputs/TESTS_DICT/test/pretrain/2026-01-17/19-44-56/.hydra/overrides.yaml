@@ -1,0 +1,9 @@
+- name=test
+- arch=hf-bert-base
+- train=bert-base
+- data=sanity-check-2
+- dryrun=True
+- impl.microbatch_size=2
+- impl.compile_torch=False
+- impl.fullgraph=false
+- impl.threads=8

@@ -1,0 +1,19 @@
+GLUE_amean: 0.3400613069534302
+GLUE_hmean: 0.0
+GPU: NVIDIA A30
+RAM: 2.083667755126953
+VRAM: 3.148207187652588
+cola_matthews_correlation: 0.0
+kWh: 0.5068988461111115
+mnli_accuracy: 0.3544574630667346
+mnli_accuracy_extra: 0.3522172497965826
+mrpc_accuracy: 0.6838235294117647
+mrpc_f1: 0.8122270742358079
+numGPUs: 1
+qnli_accuracy: 0.5053999633900788
+qqp_accuracy: 0.6318327974276527
+qqp_f1: 0.0
+rte_accuracy: 0.5270758122743683
+sst2_accuracy: 0.5091743119266054
+stsb_pearson: 0.0
+stsb_spearmanr: 0.0

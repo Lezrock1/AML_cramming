@@ -1,0 +1,5 @@
+- name=berto4_final_microbatch256
+- arch=crammed-bert
+- train=bert-o4
+- data=pile-readymade
+- impl.microbatch_size=256

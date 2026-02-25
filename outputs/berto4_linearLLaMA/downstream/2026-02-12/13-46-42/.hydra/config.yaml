@@ -1,0 +1,172 @@
+impl:
+  path: data
+  local_staging_dir: null
+  forbid_dataset_preprocessing: false
+  temporary_corpus: false
+  max_raw_chunk_size: 8000000.0
+  print_loss_every_nth_step: 1000
+  save_intermediate_checkpoints: false
+  save_every_nth_step: 10000
+  resume_run_after_preempt: false
+  troubleshoot_strategy: none
+  early_termination:
+    enabled: false
+    budget: 3
+    loss_threshold: 6.0
+  microbatch_size: 16
+  threads: 32
+  benchmark: true
+  deterministic: false
+  non_blocking: true
+  tf32_allowed: true
+  matmul_precision: high
+  pad_to_multiple_of: 8
+  shuffle_in_dataloader: true
+  pin_memory: true
+  prefetch_factor: 2
+  persistent_workers: true
+  default_precision: float
+  dist_backend: nccl
+  sharing_strategy: null
+  enable_huggingface_offline_mode: false
+  local_rank: null
+  push_to_huggingface_hub: false
+  hf_directoy_name: test-crammedBERT-c5
+  add_env_variables: null
+  name: torch-default
+  mixed_precision: true
+  grad_scaling: true
+  mixed_precision_target_dtype: float16
+  zero_redundancy_optimizer: false
+  broadcast_buffers: false
+  bucket_cap_mb: 25
+  gradient_as_bucket_view: true
+  static_graph: false
+  foreach_optimizer: false
+  compile_torch: false
+  mode: null
+  dynamic: false
+  fullgraph: true
+  backend: inductor
+  _inductor_vars:
+    max_autotune_gemm: true
+    max_autotune_pointwise: false
+    triton:
+      cudagraphs: true
+      cudagraph_trees: false
+    permute_fusion: true
+    shape_padding: true
+  enable_mem_efficient_sdp: true
+  enable_math_sdp: true
+  enable_flash_sdp: true
+wandb:
+  enabled: false
+  entity: null
+  project: cramming-eval
+  tags: []
+eval:
+  optim:
+    type: AdamW
+    lr: 4.0e-05
+    betas:
+    - 0.9
+    - 0.98
+    eps: 1.0e-06
+    weight_decay: 0.0
+    amsgrad: false
+  tasks:
+    cola:
+      collection: glue
+      regression: false
+      structure:
+      - sentence
+      target_metrics:
+      - matthews_correlation
+    mnli:
+      collection: glue
+      regression: false
+      structure:
+      - premise
+      - hypothesis
+      target_metrics:
+      - accuracy
+      - accuracy_extra
+    mrpc:
+      collection: glue
+      regression: false
+      structure:
+      - sentence1
+      - sentence2
+      target_metrics:
+      - f1
+    qnli:
+      collection: glue
+      regression: false
+      structure:
+      - question
+      - sentence
+      target_metrics:
+      - accuracy
+    qqp:
+      collection: glue
+      regression: false
+      structure:
+      - question1
+      - question2
+      target_metrics:
+      - f1
+    rte:
+      collection: super_glue
+      regression: false
+      structure:
+      - premise
+      - hypothesis
+      target_metrics:
+      - accuracy
+    sst2:
+      collection: glue
+      regression: false
+      structure:
+      - sentence
+      target_metrics:
+      - accuracy
+    stsb:
+      collection: glue
+      regression: true
+      structure:
+      - sentence1
+      - sentence2
+      target_metrics:
+      - pearson
+  name: GLUE
+  evaluation_set: validation
+  checkpoint: latest
+  path: ${impl.path}
+  max_seq_length: 128
+  batch_size: 16
+  batch_size_ramp: 0
+  gradient_clipping: null
+  limited_decay_keys:
+  - bias
+  - LayerNorm.bias
+  - LayerNorm.weight
+  - norm
+  scheduler: cosine-decay
+  optim_mod:
+    name: none
+  eval_in_train_mode: true
+  epochs: 5
+  warmup_steps: 0.1
+  cooldown_steps: 0
+  steps: null
+  testing:
+    batch_size: 128
+  arch_modifications:
+    classification_head:
+      pooler: zero_index
+      include_ff_layer: true
+      nonlin: Tanh
+base_dir: outputs
+seed: null
+name: berto4_linearLLaMA
+dryrun: false

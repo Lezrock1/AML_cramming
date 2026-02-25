@@ -1,0 +1,4 @@
+- name=berto4_final
+- arch=crammed-bert
+- train=bert-o4
+- data=pile-readymade

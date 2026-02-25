@@ -1,0 +1,11 @@
+- name=test0.1hA30_microbatch_size128
+- arch=crammed-bert
+- train=bert-o4
+- data=pile-readymade
+- budget=0.1
+- impl.threads=16
+- impl.microbatch_size=128
+- impl.compile_torch=False
+- impl.fullgraph=false
+- wandb.enabled=True
+- wandb.project=cramming

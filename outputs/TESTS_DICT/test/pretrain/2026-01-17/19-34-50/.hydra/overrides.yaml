@@ -1,0 +1,6 @@
+- name=test
+- arch=hf-bert-base
+- train=bert-base
+- data=sanity-check-2
+- dryrun=True
+- impl.microbatch_size=2

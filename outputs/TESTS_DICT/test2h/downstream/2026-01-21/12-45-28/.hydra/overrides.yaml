@@ -1,0 +1,6 @@
+- eval=GLUE_sane
+- name=test2h
+- eval.checkpoint=latest
+- impl.shuffle_in_dataloader=True
+- impl.compile_torch=False
+- impl.microbatch_size=8

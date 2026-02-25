@@ -1,0 +1,8 @@
+- name=smoke_pile_data
+- arch=crammed-bert
+- train=bert-o4
+- data=pile-readymade
+- dryrun=True
+- impl.compile_torch=False
+- impl.fullgraph=false
+- impl.threads=8

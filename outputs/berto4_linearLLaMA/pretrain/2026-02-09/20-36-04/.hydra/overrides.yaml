@@ -1,0 +1,5 @@
+- name=berto4_linearLLaMA
+- arch=crammed-bert_linearLLaMA
+- train=bert-o4
+- data=pile-readymade
+- impl.microbatch_size=128
